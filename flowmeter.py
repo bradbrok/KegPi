@@ -17,6 +17,7 @@ class FlowMeter(object):
     last_pour_time = 0
     total_pour = 0
     time_now = 0
+    calibration = 0
     ml_per_click = 2.5 #This is an assumption, need to have easy way to calibrate.
     oz_per_click = 0.08454
     ml_in_a_pint = 473.176
@@ -32,11 +33,19 @@ class FlowMeter(object):
         self.last_pour_time = 0
         self.total_pour = 0
         self.enabled = True
+        self.calibration = 0
         self.ml_per_click = 2.5
         self.oz_per_click = 0.08454
         self.ml_in_a_pint = 473.176
         self.ml_in_an_oz = 29.5735
         self.to_ml = 0
+
+    #User will input the calibration
+    def calibrate(self):
+        print "Please measure your last pour in ml, and then enter the volume:"
+        cal_input = raw_input("> ")
+        self.calibration = (float(cal_input) / self.last_pour)
+        print self.calibration, "ml in a click."
 
     #GPIO detects the rising edge, and updates the current count.
     #Find the time of the last click.

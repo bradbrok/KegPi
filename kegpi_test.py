@@ -15,6 +15,7 @@ while True:
 		print "stopped"
 		time.sleep(10)
 		print f.last_pour_func()
+		f.calibrate()
 		print f.last_pour_in_oz()
 		print f.last_pour_in_ml()
 		break
