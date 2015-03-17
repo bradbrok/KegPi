@@ -2,14 +2,14 @@ import time
 from random import randint
 from flowmeter import *
 
-rand_flow = randint(142, 242)
+rand_flow = randint(142, 200)
 f = FlowMeter()
 clicks = 0
 
 while True:
 	if (clicks < rand_flow):
 		clicks = clicks + 1
-		time.sleep(.02)
+		time.sleep(.01)
 		f.update()
 	else:
 		print "stopped"
