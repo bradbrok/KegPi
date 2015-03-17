@@ -1,6 +1,8 @@
-'''KegPi - Bradley Brockman
-	Simple and elegant Raspberry Pi Keg Monitoring system.
-'''
+"""
+KegPi
+
+The tastiest solution to monitor your keggerator.
+"""
 import time
 import math
 from flowmeter import *
