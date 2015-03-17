@@ -1,3 +1,9 @@
+"""
+KegPi
+
+The tastiest solution to monitor your keggerator.
+"""
+
 import time
 
 
@@ -54,11 +60,18 @@ class FlowMeter(object):
             time.sleep(1)
             self.last_pour_func()
 
+    #Store the total click count to update keg volume.
+    def store_total_clicks(self):
+        self.total_pour = self.last_pour + self.total_pour
+        return self.total_pour
+
+    #Store the last pour in ml
     def last_pour_in_ml(self):
         ml = (self.last_pour_func() * self.ml_per_click)
         print ml, " Ml Poured."
         return ml
 
+    #Store the last pour in OZ
     def last_pour_in_oz(self):
         self.last_pour_oz = (self.last_pour_func() * self.oz_per_click)
         print self.last_pour_oz, "oz poured."
