@@ -46,6 +46,7 @@ class FlowMeter(object):
         print self.click_count, "Last Click"
         print self.last_click_time, "was the time this cick was found."
 
+
     #If no clicks are found in the last 20 seconds, record the clicks as a last pour.
     #Reset click count for next pour.
     def last_pour_func(self):
@@ -67,9 +68,9 @@ class FlowMeter(object):
 
     #Store the last pour in ml
     def last_pour_in_ml(self):
-        ml = (self.last_pour * self.ml_per_click)
-        print ml, " Ml poured."
-        return ml
+        self.to_ml = (self.last_pour * self.ml_per_click)
+        print self.to_ml, " Ml poured."
+        return self.to_ml
 
     #Store the last pour in OZ
     def last_pour_in_oz(self):

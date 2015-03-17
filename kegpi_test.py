@@ -14,10 +14,7 @@ while True:
 	else:
 		print "stopped"
 		time.sleep(10)
+		print f.last_pour_func()
+		print f.last_pour_in_oz()
+		print f.last_pour_in_ml()
 		break
-
-#y = f.last_pour_in_ml()
-z = f.last_pour_in_oz()
-
-#print y
-print z
