@@ -67,13 +67,13 @@ class FlowMeter(object):
 
     #Store the last pour in ml
     def last_pour_in_ml(self):
-        ml = (self.last_pour_func() * self.ml_per_click)
-        print ml, " Ml Poured."
+        ml = (self.last_pour * self.ml_per_click)
+        print ml, " Ml poured."
         return ml
 
     #Store the last pour in OZ
     def last_pour_in_oz(self):
-        self.last_pour_oz = (self.last_pour_func() * self.oz_per_click)
+        self.last_pour_oz = (self.last_pour * self.oz_per_click)
         print self.last_pour_oz, "oz poured."
         return self.last_pour_oz
 
