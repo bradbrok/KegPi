@@ -18,7 +18,7 @@ class FlowMeter(object):
     total_pour = 0
     time_now = 0
     calibration = 0
-    ml_per_click = 2.5 #This is an assumption, need to have easy way to calibrate.
+    ml_per_click = 0 #This is an assumption, need to have easy way to calibrate.
     oz_per_click = 0.08454
     ml_in_a_pint = 473.176
     ml_in_an_oz = 29.5735
@@ -34,7 +34,7 @@ class FlowMeter(object):
         self.total_pour = 0
         self.enabled = True
         self.calibration = 0
-        self.ml_per_click = 2.5
+        self.ml_per_click = self.calibration
         self.oz_per_click = 0.08454
         self.ml_in_a_pint = 473.176
         self.ml_in_an_oz = 29.5735
@@ -77,13 +77,19 @@ class FlowMeter(object):
 
     #Store the last pour in ml
     def last_pour_in_ml(self):
-        self.to_ml = (self.last_pour * self.ml_per_click)
-        print self.to_ml, " Ml poured."
-        return self.to_ml
+        if self.calibration == 0:
+            print "Please calibrate by calling calibrate() method first."
+        else:
+            self.to_ml = (self.last_pour * self.calibration)
+            print self.to_ml, " Ml poured."
+            return self.to_ml
 
     #Store the last pour in OZ
     def last_pour_in_oz(self):
-        self.last_pour_oz = (self.last_pour * self.oz_per_click)
-        print self.last_pour_oz, "oz poured."
-        return self.last_pour_oz
+        if self.calibration == 0:
+            print "Please calibrate by calling calibrate() method first."
+        else:
+            self.last_pour_oz = ((self.calibration * self.last_pour) / self.ml_in_an_oz)
+            print self.last_pour_oz, "oz poured."
+            return self.last_pour_oz
 
