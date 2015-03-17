@@ -18,13 +18,13 @@ class FlowMeter(object):
     total_pour = 0
     time_now = 0
     calibration = 0
-    ml_per_click = 0 #This is an assumption, need to have easy way to calibrate.
+    ml_per_click = 0 #This parameter inherits from calibration method.
     oz_per_click = 0.08454
     ml_in_a_pint = 473.176
     ml_in_an_oz = 29.5735
     to_ml = 0
 
-    #Initialize all the things.jpg!!!
+    #Initialize all_the_things.jpg!!!
     def __init__(self):
         self.click_count = 0
         self.last_click_time = 0
@@ -41,11 +41,18 @@ class FlowMeter(object):
         self.to_ml = 0
 
     #User will input the calibration
+    #Need to add logic to detect if user doesn't eneter proper calibration.
     def calibrate(self):
         print "Please measure your last pour in ml, and then enter the volume:"
         cal_input = raw_input("> ")
-        self.calibration = (float(cal_input) / self.last_pour)
-        print self.calibration, "ml in a click."
+        if cal_input == '':
+            cal_input = 0
+        elif cal_input.isdigit() != True:
+            print "That is not a number. Please retry the calibration."
+            cal_input = 0
+        else:
+            self.calibration = (float(cal_input) / self.last_pour)
+            print self.calibration, "ml in a click."
 
     #GPIO detects the rising edge, and updates the current count.
     #Find the time of the last click.
