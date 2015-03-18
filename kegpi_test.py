@@ -1,7 +1,6 @@
 import time
 from random import randint
 from flowmeter import *
-import pytest
 
 rand_flow = randint(142, 200)
 f = FlowMeter()

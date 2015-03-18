@@ -23,17 +23,13 @@ GPIO.setup(flow_pin_tap1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 #GPIO.setup(flow_pin_tap2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 #Add the event detection to trigger callback.
-GPIO.add_event_detect(flow_pin, GPIO.RISING, callback=to_pi)
+GPIO.add_event_detect(flow_pin_tap1, GPIO.RISING, callback=to_pi)
 
 #This triggers the callback.
 def to_pi(channel):
 	FlowMeter.update()
 
-#Find the last pour in oz.
-tap_1_last_pour = FlowMeter.last_pour_in_oz()
-#tap2_last = update.FlowMeter(to_pi)
-#tap_2_last_pour = FlowMeter.last_pour_in_oz()
-
+FlowMeter.last_pour_func()
 
 print(tap1_last, "oz poured from Tap 1")
 #print(tap2_last, " ml poured from Tap 2")
