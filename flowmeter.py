@@ -18,7 +18,7 @@ class FlowMeter(object):
     total_pour = 0
     drink_count = 0
     time_now = 0
-    calibration = 2
+    calibration = 0
     ml_per_click = 3 #This parameter inherits from calibration method.
     oz_per_click = 0.08454
     ml_in_a_pint = 473.176
@@ -35,7 +35,7 @@ class FlowMeter(object):
         self.total_pour = 0
         self.drink_count = 0
         self.enabled = True
-        self.calibration = 2 #0
+        self.calibration = 0
         self.ml_per_click = self.calibration
         self.oz_per_click = 0.08454
         self.ml_in_a_pint = 473.176
@@ -85,7 +85,11 @@ class FlowMeter(object):
             self.click_count = 0
             print "Last pour was", self.last_pour, " clicks."
             print "Click count reset to: ", self.click_count
-            #Call these to update our volumes and totals in one go.
+            if (self.calibration == 0):
+                self.calibrate()
+            else:
+                print "Do nothing"
+                #Call these to update our volumes and totals in one go.
             self.last_pour_in_ml(); self.last_pour_in_oz()
             self.store_total_clicks() #Update our clicks, will be used for keg total volume.
             self.count_drinks()

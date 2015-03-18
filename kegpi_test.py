@@ -14,6 +14,5 @@ while True:
 	else:
 		print "stopped"
 		time.sleep(10)
-		print f.last_pour_in_oz()
-		print f.last_pour_in_ml()
+		f.last_pour_func()
 		break
