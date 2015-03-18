@@ -23,7 +23,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(flow_pin_tap1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 #GPIO.setup(flow_pin_tap2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-#This triggers the callback.
+#This is the def for the callback.
 def to_pi(channel):
 	f.update()
 

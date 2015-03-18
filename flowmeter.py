@@ -52,6 +52,7 @@ class FlowMeter(object):
             print "Hint: The bigger the pour, the more accurate the calibration."
             cal_input = raw_input("> ")
             if cal_input == '':
+                print "You didn't input anything, please try again."
                 cal_input = 0
             elif cal_input.isdigit() != True:
                 print "That is not a number. Please retry the calibration."
@@ -67,11 +68,6 @@ class FlowMeter(object):
         self.last_click_time = time.time()
         print self.click_count, "Last Click"
         print self.last_click_time, "was the time this cick was found."
-        if (time.time() - self.last_click_time > 5):
-            self.last_pour_func()
-        else:
-            "Waiting for pour to stop."
-
 
     #If no clicks are found in the last 20 seconds, record the clicks as a last pour.
     #Reset click count for next pour.
@@ -98,6 +94,10 @@ class FlowMeter(object):
             print "Nothing happened."
             time.sleep(1)
             self.last_pour_func()
+
+    def update_all():
+        self.update()
+        
 
     #Store the total click count to update keg volume.
     def store_total_clicks(self):
