@@ -24,6 +24,7 @@ class FlowMeter(object):
     ml_in_a_pint = 473.176
     ml_in_an_oz = 29.5735
     to_ml = 0
+    last_pour_time = 0
 
     #Initialize all_the_things.jpg!!!
     def __init__(self):
@@ -41,6 +42,7 @@ class FlowMeter(object):
         self.ml_in_a_pint = 473.176
         self.ml_in_an_oz = 29.5735
         self.to_ml = 0
+        self.last_pour_time = 0
 
     #User will input the calibration
     #Need to add logic to detect if user doesn't eneter proper calibration.
@@ -81,22 +83,25 @@ class FlowMeter(object):
             self.click_count = 0
             print "Last pour was", self.last_pour, " clicks."
             print "Click count reset to: ", self.click_count
+            self.last_pour_time = time.time()
             if (self.calibration == 0):
                 self.calibrate()
             else:
                 print "Do nothing"
-                #Call these to update our volumes and totals in one go.
-            self.last_pour_in_ml(); self.last_pour_in_oz()
-            self.store_total_clicks() #Update our clicks, will be used for keg total volume.
-            self.count_drinks()
+            #Call this to update our volumes and totals in one go.
+            self.update_all()
             return self.last_pour
         else:
             print "Nothing happened."
             time.sleep(1)
             self.last_pour_func()
 
-    def update_all():
-        self.update()
+    #Update all of these in one call.
+    def update_all(self):
+        self.last_pour_in_ml()
+        self.last_pour_in_oz()
+        self.store_total_clicks()
+        self.count_drinks()
 
 
     #Store the total click count to update keg volume.
