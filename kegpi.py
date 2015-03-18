@@ -9,7 +9,6 @@ from kegs import *
 import os
 import time
 import RPi.GPIO as GPIO
-import sqlite3 as lite
 
 
 beers_drank_while_coding_this = "6"

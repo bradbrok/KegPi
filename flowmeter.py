@@ -69,8 +69,13 @@ class FlowMeter(object):
         if (time.time() - self.last_click_time > 5):
             self.last_pour = self.click_count
             self.click_count = 0
-            print "Last pour was ", self.last_pour, " clicks."
+            print "Last pour was", self.last_pour, " clicks."
             print "Click count reset to: ", self.click_count
+            print "!!!"
+            #Call these to update our volumes and totals in one go.
+            self.last_pour_in_ml()
+            self.last_pour_in_oz()
+            self.store_total_clicks() #Update our clicks, will be used for keg total volume.
             return self.last_pour
         else:
             print "Nothing happened."
@@ -88,7 +93,7 @@ class FlowMeter(object):
             print "Please calibrate by calling calibrate() method first."
         else:
             self.to_ml = (self.last_pour * self.calibration)
-            print self.to_ml, " Ml poured."
+            print self.to_ml, "ml poured."
             return self.to_ml
 
     #Store the last pour in OZ
@@ -96,7 +101,7 @@ class FlowMeter(object):
         if self.calibration == 0:
             print "Please calibrate by calling calibrate() method first."
         else:
-            self.last_pour_oz = ((self.calibration * self.last_pour) / self.ml_in_an_oz)
+            self.last_pour_oz = ((self.last_pour * self.calibration) / self.ml_in_an_oz)
             print self.last_pour_oz, "oz poured."
             return self.last_pour_oz
 
