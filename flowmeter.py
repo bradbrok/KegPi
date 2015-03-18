@@ -16,6 +16,7 @@ class FlowMeter(object):
     last_pour = 0
     last_pour_time = 0
     total_pour = 0
+    drink_count = 0
     time_now = 0
     calibration = 0
     ml_per_click = 0 #This parameter inherits from calibration method.
@@ -32,9 +33,10 @@ class FlowMeter(object):
         self.last_pour = 0
         self.last_pour_time = 0
         self.total_pour = 0
+        self.drink_count = 0
         self.enabled = True
         self.calibration = 0
-        self.ml_per_click = self.calibration
+        self.ml_per_click = 3 #self.calibration
         self.oz_per_click = 0.08454
         self.ml_in_a_pint = 473.176
         self.ml_in_an_oz = 29.5735
@@ -66,7 +68,11 @@ class FlowMeter(object):
     #If no clicks are found in the last 20 seconds, record the clicks as a last pour.
     #Reset click count for next pour.
     def last_pour_func(self):
-        if (time.time() - self.last_click_time > 5):
+        if (self.click_count == 0):
+            time.sleep(1)
+            print "Nothing to do yet."
+            self.last_pour_func()
+        elif (time.time() - self.last_click_time > 5):
             self.last_pour = self.click_count
             self.click_count = 0
             print "Last pour was", self.last_pour, " clicks."
@@ -75,10 +81,8 @@ class FlowMeter(object):
             self.last_pour_in_ml()
             self.last_pour_in_oz()
             self.store_total_clicks() #Update our clicks, will be used for keg total volume.
+            self.count_drinks()
             return self.last_pour
-        elif (self.click_count == 0):
-            time.sleep(1)
-            print "Nothing to do yet."
         else:
             print "Nothing happened."
             time.sleep(1)
@@ -88,6 +92,12 @@ class FlowMeter(object):
     def store_total_clicks(self):
         self.total_pour = self.last_pour + self.total_pour
         return self.total_pour
+
+    #We can use this to determine how many beers total were had.
+    def count_drinks(self):
+        self.drink_count = self.drink_count =+ 1
+        print self.drink_count, "drinks total."
+        return self.drink_count
 
     #Store the last pour in ml
     def last_pour_in_ml(self):

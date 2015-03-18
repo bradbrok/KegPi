@@ -11,7 +11,7 @@ import time
 import RPi.GPIO as GPIO
 
 #This will soon update when I get around to using this app.
-beers_drank_while_coding_this = "6"
+beers_drank_while_coding_this = "7"
 f = FlowMeter()
 
 #Flow meter pins on GPIO based on BCM layout.
