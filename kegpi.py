@@ -5,7 +5,7 @@ The tastiest solution to monitor your keggerator.
 """
 
 from flowmeter import *
-from kegs import *
+#from kegs import *
 import os
 import time
 import RPi.GPIO as GPIO
