@@ -81,18 +81,18 @@ class FlowMeter(object):
         elif (time.time() - self.last_click_time > 5):
             self.last_pour = self.click_count
             self.click_count = 0
-            print "Last pour was", self.last_pour, " clicks."
             print "Click count reset to: ", self.click_count
-            self.last_pour_time = time.time()
+            self.last_pour_time = time.ctime()
             if (self.calibration == 0):
                 self.calibrate()
             else:
-                print "Do nothing"
+                print "Do nothing."
             #Call this to update our volumes and totals in one go.
             self.update_all()
+            print "Last pour was", self.last_pour, "clicks, at", self.last_pour_time
             return self.last_pour
         else:
-            print "Nothing happened."
+            print "Waiting for pour to finish."
             time.sleep(1)
             self.last_pour_func()
 
@@ -102,7 +102,6 @@ class FlowMeter(object):
         self.last_pour_in_oz()
         self.store_total_clicks()
         self.count_drinks()
-
 
     #Store the total click count to update keg volume.
     def store_total_clicks(self):
