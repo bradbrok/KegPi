@@ -71,12 +71,14 @@ class FlowMeter(object):
             self.click_count = 0
             print "Last pour was", self.last_pour, " clicks."
             print "Click count reset to: ", self.click_count
-            print "!!!"
             #Call these to update our volumes and totals in one go.
             self.last_pour_in_ml()
             self.last_pour_in_oz()
             self.store_total_clicks() #Update our clicks, will be used for keg total volume.
             return self.last_pour
+        elif (self.click_count == 0):
+            time.sleep(1)
+            print "Nothing to do yet."
         else:
             print "Nothing happened."
             time.sleep(1)
