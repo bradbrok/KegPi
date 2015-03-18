@@ -18,8 +18,8 @@ class FlowMeter(object):
     total_pour = 0
     drink_count = 0
     time_now = 0
-    calibration = 0
-    ml_per_click = 0 #This parameter inherits from calibration method.
+    calibration = 2
+    ml_per_click = 3 #This parameter inherits from calibration method.
     oz_per_click = 0.08454
     ml_in_a_pint = 473.176
     ml_in_an_oz = 29.5735
@@ -35,8 +35,8 @@ class FlowMeter(object):
         self.total_pour = 0
         self.drink_count = 0
         self.enabled = True
-        self.calibration = 0
-        self.ml_per_click = 3 #self.calibration
+        self.calibration = 2 #0
+        self.ml_per_click = self.calibration
         self.oz_per_click = 0.08454
         self.ml_in_a_pint = 473.176
         self.ml_in_an_oz = 29.5735
@@ -45,16 +45,20 @@ class FlowMeter(object):
     #User will input the calibration
     #Need to add logic to detect if user doesn't eneter proper calibration.
     def calibrate(self):
-        print "Please measure your last pour in ml, and then enter the volume:"
-        cal_input = raw_input("> ")
-        if cal_input == '':
-            cal_input = 0
-        elif cal_input.isdigit() != True:
-            print "That is not a number. Please retry the calibration."
-            cal_input = 0
+        if (self.calibration > 0):
+            print "Calibrated", self.calibration
         else:
-            self.calibration = (float(cal_input) / self.last_pour)
-            print self.calibration, "ml in a click."
+            print "Please measure your last pour in ml, and then enter the volume:"
+            print "Hint: The bigger the pour, the more accurate the calibration."
+            cal_input = raw_input("> ")
+            if cal_input == '':
+                cal_input = 0
+            elif cal_input.isdigit() != True:
+                print "That is not a number. Please retry the calibration."
+                cal_input = 0
+            else:
+                self.calibration = (float(cal_input) / self.last_pour)
+                print self.calibration, "ml in a click."
 
     #GPIO detects the rising edge, and updates the current count.
     #Find the time of the last click.
@@ -63,6 +67,10 @@ class FlowMeter(object):
         self.last_click_time = time.time()
         print self.click_count, "Last Click"
         print self.last_click_time, "was the time this cick was found."
+        if (time.time() - self.last_click_time > 5):
+            self.last_pour_func()
+        else:
+            "Waiting for pour to stop."
 
 
     #If no clicks are found in the last 20 seconds, record the clicks as a last pour.
@@ -78,8 +86,7 @@ class FlowMeter(object):
             print "Last pour was", self.last_pour, " clicks."
             print "Click count reset to: ", self.click_count
             #Call these to update our volumes and totals in one go.
-            self.last_pour_in_ml()
-            self.last_pour_in_oz()
+            self.last_pour_in_ml(); self.last_pour_in_oz()
             self.store_total_clicks() #Update our clicks, will be used for keg total volume.
             self.count_drinks()
             return self.last_pour
