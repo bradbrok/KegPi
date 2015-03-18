@@ -54,7 +54,7 @@ class FlowMeter(object):
             if cal_input == '':
                 print "You didn't input anything, please try again."
                 cal_input = 0
-            elif cal_input.isdigit() != True:
+            elif cal_input.isdigit() != True: #This doesn't seem to work for floats.
                 print "That is not a number. Please retry the calibration."
                 cal_input = 0
             else:
@@ -97,7 +97,7 @@ class FlowMeter(object):
 
     def update_all():
         self.update()
-        
+
 
     #Store the total click count to update keg volume.
     def store_total_clicks(self):
