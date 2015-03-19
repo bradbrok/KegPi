@@ -73,7 +73,6 @@ class FlowMeter(object):
     #Reset click count for next pour.
     def last_pour_func(self):
         if (self.click_count == 0):
-            time.sleep(1)
             print "Nothing to do yet."
             self.last_pour_func()
         elif (time.time() - self.last_click_time > 5):
