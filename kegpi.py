@@ -27,11 +27,13 @@ GPIO.setup(flow_pin_tap1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 def to_pi(channel):
 	f.update()
 
+if to_pi.has_been_called:
+	time.sleep(1)
+	f.last_pour_func()
+
 #Add the event detection to trigger callback.
 GPIO.add_event_detect(flow_pin_tap1, GPIO.RISING, callback=to_pi)
 
-time.sleep(1)
-f.last_pour_func()
 #print(tap2_last, " ml poured from Tap 2")
 
 

@@ -19,7 +19,6 @@ class FlowMeter(object):
     drink_count = 0
     time_now = 0
     calibration = 0
-    ml_per_click = 3 #This parameter inherits from calibration method.
     oz_per_click = 0.08454
     ml_in_a_pint = 473.176
     ml_in_an_oz = 29.5735
@@ -37,7 +36,6 @@ class FlowMeter(object):
         self.drink_count = 0
         self.enabled = True
         self.calibration = 0
-        self.ml_per_click = self.calibration
         self.oz_per_click = 0.08454
         self.ml_in_a_pint = 473.176
         self.ml_in_an_oz = 29.5735
@@ -86,7 +84,7 @@ class FlowMeter(object):
             if (self.calibration == 0):
                 self.calibrate()
             else:
-                print "Do nothing."
+                print "Sweet, I see we're already calibrated."
             #Call this to update our volumes and totals in one go.
             self.update_all()
             print "Last pour was", self.last_pour, "clicks, at", self.last_pour_time
