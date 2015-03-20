@@ -39,9 +39,7 @@ GPIO.add_event_detect(flow_pin_tap1, GPIO.RISING, callback=to_pi)
 try:
  	while True:
 		time.sleep(1)
-		for x in 999999999:
-			time.sleep(1)
-			f.last_pour_func()
+		f.last_pour_func()
 
 except KeyboardInterrupt:
 	print "Goodbye"
