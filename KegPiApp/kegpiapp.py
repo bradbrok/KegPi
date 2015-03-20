@@ -8,7 +8,7 @@ app.debug = True
 # Main
 @app.route('/')
 def hello():
-	return "Hello world."
+	return "Hello beer."
 
 if __name__ == '__main__':
 	app.run()
