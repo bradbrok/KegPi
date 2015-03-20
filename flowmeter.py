@@ -104,7 +104,7 @@ class FlowMeter(object):
 
     #We can use this to determine how many beers total were had.
     def count_drinks(self):
-        self.drink_count = self.drink_count =+ 1
+        self.drink_count = self.drink_count + 1
         print self.drink_count, "drinks total."
         return self.drink_count
 
