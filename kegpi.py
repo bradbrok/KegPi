@@ -9,6 +9,7 @@ from flowmeter import *
 import os
 import time
 import RPi.GPIO as GPIO
+import threading
 
 #This will soon update when I get around to using this app.
 beers_drank_while_coding_this = "7"
@@ -32,11 +33,15 @@ GPIO.add_event_detect(flow_pin_tap1, GPIO.RISING, callback=to_pi)
 
 #print(tap2_last, " ml poured from Tap 2")
 
+#Create threads for the pour function call.
 
 
 try:
  	while True:
 		time.sleep(1)
+		for x in 999999999:
+			time.sleep(1)
+			f.last_pour_func()
 
 except KeyboardInterrupt:
 	print "Goodbye"

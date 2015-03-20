@@ -74,7 +74,6 @@ class FlowMeter(object):
     def last_pour_func(self):
         if (self.click_count == 0):
             print "Nothing to do yet."
-            self.last_pour_func()
         elif (time.time() - self.last_click_time > 5):
             self.last_pour = self.click_count
             self.click_count = 0
@@ -90,8 +89,6 @@ class FlowMeter(object):
             return self.last_pour
         else:
             print "Waiting for pour to finish."
-            time.sleep(1)
-            self.last_pour_func()
 
     #Update all of these in one call.
     def update_all(self):
