@@ -41,5 +41,5 @@ class Kegs(FlowMeter):
 			self.keg_volume_left = self.keg_selection - f.last_pour
 			print self.keg_volume_left, "ml left in the keg"
 			print (self.keg_volume_left / 29.5735), "oz left in keg"
-			print ((self.keg_volume_left / 29.5735) / 16), "pints left in the keg."
+			print ((self.keg_volume_left / 29.5735) / 16.0), "pints left in the keg."
 			return self.keg_volume_left

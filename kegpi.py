@@ -12,7 +12,7 @@ import RPi.GPIO as GPIO
 import threading
 
 #This will soon update when I get around to using this app.
-beers_drank_while_coding_this = "7"
+beers_drank_while_coding_this = "8"
 f = FlowMeter()
 
 #Flow meter pins on GPIO based on BCM layout.
@@ -30,11 +30,7 @@ def to_pi(channel):
 
 #Add the event detection to trigger callback.
 GPIO.add_event_detect(flow_pin_tap1, GPIO.RISING, callback=to_pi)
-
-#print(tap2_last, " ml poured from Tap 2")
-
-#Create threads for the pour function call.
-
+#GPIO.add_event_detect(flow_pin_tap2, GPIO.RISING, callback=to_pi)
 
 try:
  	while True:

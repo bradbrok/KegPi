@@ -36,7 +36,7 @@ class FlowMeter(object):
         self.total_pour = 0
         self.drink_count = 0
         self.enabled = True
-        self.calibration = 0
+        self.calibration = 2.25
         self.oz_per_click = 0.08454
         self.ml_in_a_pint = 473.176
         self.ml_in_an_oz = 29.5735
@@ -69,14 +69,13 @@ class FlowMeter(object):
     def update(self):
         self.click_count = self.click_count + 1
         self.last_click_time = time.time()
-        print self.click_count, "Last Click"
-        print self.last_click_time, "was the time this cick was found."
+        print self.click_count, "Last Click at", self.last_click_time
 
     #If no clicks are found in the last 20 seconds, record the clicks as a last pour.
     #Reset click count for next pour.
     def last_pour_func(self):
         if (self.click_count == 0):
-            print "Nothing to do yet."
+            pass
         elif (time.time() - self.last_click_time > 5):
             self.last_pour = self.click_count
             self.click_count = 0
