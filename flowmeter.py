@@ -36,7 +36,7 @@ class FlowMeter(object):
         self.total_pour = 0
         self.drink_count = 0
         self.enabled = True
-        self.calibration = 2.25
+        self.calibration = 0 #2.25
         self.oz_per_click = 0.08454
         self.ml_in_a_pint = 473.176
         self.ml_in_an_oz = 29.5735
@@ -46,23 +46,20 @@ class FlowMeter(object):
 
 
     #User will input the calibration
-    #Need to add logic to detect if user doesn't eneter proper calibration.
+    #Approximately this should be between 2 and 2.5 ml per click for most sensors.
     def calibrate(self):
-        if (self.calibration > 0):
-            print "Calibrated", self.calibration
+        print "Please measure your last pour in ml, and then enter the volume:"
+        print "Hint: The bigger the pour, the more accurate the calibration."
+        cal_input = raw_input("> ")
+        if cal_input == '':
+            print "You didn't input anything, please try again."
+            cal_input = 0
+        elif cal_input.isdigit() != True: #This doesn't seem to work for floats.
+            print "That is not a number. Please retry the calibration."
+            cal_input = 0
         else:
-            print "Please measure your last pour in ml, and then enter the volume:"
-            print "Hint: The bigger the pour, the more accurate the calibration."
-            cal_input = raw_input("> ")
-            if cal_input == '':
-                print "You didn't input anything, please try again."
-                cal_input = 0
-            elif cal_input.isdigit() != True: #This doesn't seem to work for floats.
-                print "That is not a number. Please retry the calibration."
-                cal_input = 0
-            else:
-                self.calibration = (float(cal_input) / self.last_pour)
-                print self.calibration, "ml in a click."
+            self.calibration = (float(cal_input) / self.last_pour)
+            print self.calibration, "ml in a click."
 
     #GPIO detects the rising edge, and updates the current count.
     #Find the time of the last click.

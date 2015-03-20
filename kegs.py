@@ -2,6 +2,9 @@
 KegPi
 
 The tastiest solution to monitor your keggerator.
+
+The Keg class will help us update our keg volumes and tap numbers associated with
+each and every keg.
 """
 import time
 import math
@@ -17,6 +20,7 @@ class Kegs(FlowMeter):
 	last_drink_count = f.drink_count()
 	keg_selection = []
 	keg_volume_left = 0
+	tap_number = 0
 
 
 	def __init__(self):
@@ -26,6 +30,7 @@ class Kegs(FlowMeter):
 		self.last_drink_count = f.drink_count()
 		self.keg_selection = 0
 		self.keg_volume_left = 0
+		self.tap_number = 0
 
 	#Method to determine the volume left in the keg based on volumer poured.
 	def keg_volume(self):
@@ -43,3 +48,7 @@ class Kegs(FlowMeter):
 			print (self.keg_volume_left / 29.5735), "oz left in keg"
 			print ((self.keg_volume_left / 29.5735) / 16.0), "pints left in the keg."
 			return self.keg_volume_left
+
+	#Determine which keg to subtract volume from.
+	def keg_tap_number (self):
+		pass
