@@ -24,6 +24,7 @@ class FlowMeter(object):
     ml_in_an_oz = 29.5735
     to_ml = 0
     last_pour_time = 0
+    pour_event_occured = False
 
     #Initialize all_the_things.jpg!!!
     def __init__(self):
@@ -41,6 +42,8 @@ class FlowMeter(object):
         self.ml_in_an_oz = 29.5735
         self.to_ml = 0
         self.last_pour_time = 0
+        self.pour_event_occured = False
+
 
     #User will input the calibration
     #Need to add logic to detect if user doesn't eneter proper calibration.
@@ -95,6 +98,8 @@ class FlowMeter(object):
         self.last_pour_in_ml()
         self.last_pour_in_oz()
         self.store_total_clicks()
+        self.last_click_time = time.time()
+        self.pour_event_occured = True #Use this to update our database lazily.
         self.count_drinks()
 
     #Store the total click count to update keg volume.
