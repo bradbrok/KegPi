@@ -9,9 +9,6 @@ f = FlowMeter()
 config = ConfigParser.ConfigParser()
 config.read("tap_config.ini")
 
-f.calibration = float(config.get('taps', 'calibration_0'))
-print f.calibration
-
 rand_flow = randint(142, 200)
 f = FlowMeter()
 clicks = 0

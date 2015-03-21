@@ -25,6 +25,7 @@ class FlowMeter(object):
     to_ml = 0
     last_pour_time = 0
     pour_event_occured = False
+    last_clicks = 0
 
     #Initialize all_the_things.jpg!!!
     def __init__(self):
@@ -41,8 +42,11 @@ class FlowMeter(object):
         self.ml_in_a_pint = 473.176
         self.ml_in_an_oz = 29.5735
         self.to_ml = 0
+        self.last_pour_oz = 0
         self.last_pour_time = 0
         self.pour_event_occured = False
+        self.last_clicks = 0
+
 
 
     #User will input the calibration
@@ -75,6 +79,7 @@ class FlowMeter(object):
             pass
         elif (time.time() - self.last_click_time > 5):
             self.last_pour = self.click_count
+            self.last_clicks = self.click_count
             self.click_count = 0
             print "Click count reset to: ", self.click_count
             self.last_pour_time = time.ctime()
@@ -115,7 +120,7 @@ class FlowMeter(object):
             print "Please calibrate by calling calibrate() method first."
         else:
             self.to_ml = (self.last_pour * self.calibration)
-            print self.to_ml, "ml poured."
+            print self.to_ml, "ml poured at", self.calibration, "ml per click."
             return self.to_ml
 
     #Store the last pour in OZ
