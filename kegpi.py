@@ -21,7 +21,7 @@ config = ConfigParser.ConfigParser()
 config.read("tap_config.ini")
 
 #Database config.
-db = sqlite3.connect('beverage_db')
+db = sqlite3.connect('KegPiApp/beverage_db')
 cursor = db.cursor()
 if os.path.isfile(db):
 	pass
@@ -64,20 +64,19 @@ GPIO.add_event_detect(flow_pin_tap2, GPIO.RISING, callback=to_pi_tap2)
 
 #Called when the pour event happens.
 def update_db():
-	db.connect('beverage_db')
+	db.connect('KegPiApp/beverage_db')
 	time_pour = time.time()
 	date_pour = time.ctime()
 	clicks = f.last_clicks
 	ml_pour = f.to_ml
 	oz_pour = f.last_pour_oz
-	pour_count = f.drink_count
 	if (tap == 1):
-		cursor.execute('''INSERT INTO bevs_tap1(time_pour, date_pour, clicks, ml_pour, oz_pour, pour_count)
-		VALUES (?,?,?,?,?,?)''', (time_pour, date_pour, clicks, ml_pour, oz_pour, pour_count))
+		cursor.execute('''INSERT INTO bevs_tap1(time_pour, date_pour, clicks, ml_pour, oz_pour)
+		VALUES (?,?,?,?,?)''', (time_pour, date_pour, clicks, ml_pour, oz_pour))
 		db.commit()
 	elif (tap == 2):
-		cursor.execute('''INSERT INTO bevs_tap2(time_pour, date_pour, clicks, ml_pour, oz_pour, pour_count)
-		VALUES (?,?,?,?,?,?)''', (time_pour, date_pour, clicks, ml_pour, oz_pour, pour_count))
+		cursor.execute('''INSERT INTO bevs_tap2(time_pour, date_pour, clicks, ml_pour, oz_pour)
+		VALUES (?,?,?,?,?)''', (time_pour, date_pour, clicks, ml_pour, oz_pour))
 		db.commit()
 	else:
 		print "No data for tap can be recorded. Something went wrong."

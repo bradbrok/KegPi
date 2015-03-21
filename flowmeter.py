@@ -8,6 +8,7 @@ import time
 
 
 class FlowMeter(object):
+ 
     version = 'v0.1'
     enabled = True
     click_count = 0
@@ -26,6 +27,7 @@ class FlowMeter(object):
     last_pour_time = 0
     pour_event_occured = False
     last_clicks = 0
+
 
     #Initialize all_the_things.jpg!!!
     def __init__(self):

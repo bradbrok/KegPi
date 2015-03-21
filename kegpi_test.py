@@ -19,8 +19,7 @@ while True:
 		time.sleep(.01)
 		f.update()
 	else:
-		f.calibration = float(config.get('taps', 'calibration_0'))
-		print f.calibration
+		f.calibration = float(config.get('taps', 'calibration_1'))
 		print "stopped"
 		time.sleep(10)
 		f.last_pour_func()
