@@ -20,7 +20,7 @@ config = ConfigParser.ConfigParser()
 config.read("tap_config.ini")
 
 #Database config.
-db = sqlite3.connect('KegPiApp/beverage_db')
+db = sqlite3.connect('beverage_db')
 cursor = db.cursor()
 if os.path.isfile(db):
 	db.close()
