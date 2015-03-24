@@ -2,10 +2,12 @@
 KegPi
 
 The tastiest solution to monitor your keggerator.
+
+The FlowMeter clas helps us interface with the meter on the GPIO.
 """
 
 import time
-
+import ConfigParser
 
 class FlowMeter(object):
  
@@ -56,7 +58,7 @@ class FlowMeter(object):
     def calibrate(self):
         print "Please measure your last pour in ml, and then enter the volume:"
         print "Hint: The bigger the pour, the more accurate the calibration."
-        cal_input = raw_input("> ")
+        cal_input = yield #raw_input("> ")
         if cal_input == '':
             print "You didn't input anything, please try again."
             cal_input = 0
@@ -133,4 +135,3 @@ class FlowMeter(object):
             self.last_pour_oz = ((self.last_pour * self.calibration) / self.ml_in_an_oz)
             print self.last_pour_oz, "oz poured."
             return self.last_pour_oz
-
