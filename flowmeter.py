@@ -55,10 +55,10 @@ class FlowMeter(object):
 
     #User will input the calibration
     #Approximately this should be between 2 and 2.5 ml per click for most sensors.
-    def calibrate(self):
+    def calibrate(self, cal_input):
         print "Please measure your last pour in ml, and then enter the volume:"
         print "Hint: The bigger the pour, the more accurate the calibration."
-        cal_input = yield #raw_input("> ")
+        #cal_input = yield ###raw_input("> ")
         if cal_input == '':
             print "You didn't input anything, please try again."
             cal_input = 0

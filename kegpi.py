@@ -22,15 +22,11 @@ config.read("tap_config.ini")
 #Database config.
 db = sqlite3.connect('beverage_db')
 cursor = db.cursor()
-if os.path.isfile(db):
-	db.close()
-else:
-    cursor.execute('''CREATE TABLE bevs_tap1(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
-        clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC, pour_count INTEGER)''')
-    cursor.execute('''CREATE TABLE bevs_tap2(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
-        clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC, pour_count INTEGER)''')
-    db.commit()
-    db.close()
+cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap1(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
+    clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC, pour_count INTEGER)''')
+cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap2(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
+    clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC, pour_count INTEGER)''')
+#db.commit()
 
 #FlowMeter class.
 f = FlowMeter()
@@ -64,9 +60,8 @@ GPIO.add_event_detect(flow_pin_tap2, GPIO.RISING, callback=to_pi_tap2)
 
 #Called when the pour event happens.
 def update_db():
-    db.connect('KegPiApp/beverage_db')
     time_pour = time.time()
-    date_pour = time.
+    date_pour = time.ctime()
     clicks = f.last_clicks
     ml_pour = f.to_ml
     oz_pour = f.last_pour_oz
@@ -81,7 +76,6 @@ def update_db():
     else:
         print "No data for tap can be recorded. Something went wrong."
     f.pour_event_occured = False
-    db.close()
 
 try:
     while True:
