@@ -9,6 +9,9 @@ class BevDataBase():
     def __init__(self):
         self.db = sqlite3.connect('beverage_db', check_same_thread=False)
         self.cursor = self.db.cursor()
+
+    def close(self):
+        self.db.close()
     
     #Show details of just the last beer on tap 1 & 2 accordingly.
     def last_beer_tap1_id(self):
@@ -18,6 +21,7 @@ class BevDataBase():
             return last_id
         else:
             return "Something is wrong. No pours found."
+        self.close()
 
     def last_beer_tap1_oz(self):
         idx = self.last_beer_tap1_id()
@@ -27,6 +31,7 @@ class BevDataBase():
             return oz1
         else:
             return "0"
+        self.close()
 
     def last_beer_tap1_time(self):
         idx = self.last_beer_tap1_id()
@@ -36,6 +41,7 @@ class BevDataBase():
             return time1
         else:
             return "0"
+        self.close()
 
     def last_beer_tap2_id(self):
         self.cursor.execute('''SELECT max(id) from bevs_tap2''')
@@ -44,6 +50,7 @@ class BevDataBase():
             return last_id
         else:
             return "0"
+        self.close()
 
     def last_beer_tap2_oz(self):
         if self.last_beer_tap2_id() != "0":
@@ -53,6 +60,7 @@ class BevDataBase():
             return oz2
         else:
             return "0"
+        self.close()
 
     def last_beer_tap2_time(self):
         if self.last_beer_tap2_id() != "0":
@@ -61,7 +69,8 @@ class BevDataBase():
             time2 = self.cursor.fetchone()[0]
             return time2
         else:
-            return "0"
+            return "No pours recorded"
+        self.close()
 
     #Show basic details of just the last 5 beers. Pass this as dict.
     def last_five_tap1(self):
@@ -80,7 +89,8 @@ class BevDataBase():
             remaining_vol1 = starting_vol - vol1
             return int(remaining_vol1 / 16)
         else:
-            return "Full!"
+            return "No"
+        self.close()
 
     def keg_volume2_pints(self):
         starting_vol = 640.0 #5 gallons in oz
@@ -90,7 +100,8 @@ class BevDataBase():
             remaining_vol1 = starting_vol - vol2
             return int(remaining_vol2 / 16)
         else:
-            return "Full!"
+            return "No"
+        self.close()
 
     #Drop the tables for the keg, store totals only in db.
     def kick_keg1(self, beer_name1):
@@ -98,6 +109,3 @@ class BevDataBase():
 
     def kick_keg2(self, beer_name2):
         pass
-
-    def close(self):
-        self.db.close()
