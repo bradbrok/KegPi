@@ -3,26 +3,27 @@
   <div class="taps">
     <div class="tap1">
     <h2>Keg 1</h2>
+    <h3>Beer Name 1</h3>
     	<ul class="stats1">
-    		<li>Beer1 Name</li>
-    		<li>Beer2 FG: xx OG: yy</li>
-    		<li>ABV: xx%</li>
-    		<li>Keg1 Volume: {{ ml_left }} Pints remaining</li>
-    		<li>SRM1</li>
+    		<li>OG: {{og2}} / FG: {{fg1}}</li>
+    		<li>ABV: {{abv1}}%</li>
+    		<li>Keg1 Volume: {{ pints1_left }} Pints remaining</li>
         <li>Number of beers drank so far : {{ last1 }}</li>
-        <li>Last pour volume: {{ last_oz }}</li>
+        <li>Last pour volume: {{ last_oz1 }} oz</li>
         <li>Time of last pour: {{ time1 }}</li>
     	</ul>
       {{ x }}
     </div>
     <div class="tap2">
     <h2>Keg 2</h2>
+    <h3>Beer Name 2</h3>
     	<ul class="stats2">
-    		<li>Beer2 Name</li>
-    		<li>Beer2 FG: xx OG: yy</li>
-    		<li>ABV: xx%</li>
-    		<li>Keg2 Volume % and ml/oz</li>
-    		<li>SRM2</li>
+    		<li>OG: {{og2}} / FG: {{fg2}} </li>
+        <li>ABV: {{abv2}}%</li>
+        <li>Keg1 Volume: {{ pints2_left }} Pints remaining</li>
+        <li>Number of beers drank so far : {{ last2 }}</li>
+        <li>Last pour volume: {{ last_oz2 }} oz</li>
+        <li>Time of last pour: {{ time2 }}</li>
     	</ul>
     </div>
   </div>
