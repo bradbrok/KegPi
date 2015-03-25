@@ -10,6 +10,21 @@ class BevDataBase():
         self.db = sqlite3.connect('beverage_db', check_same_thread=False)
         self.cursor = self.db.cursor()
 
+    def beers_init(self):
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS beers1(id INTEGER PRIMARY KEY, beer_name TEXT, 
+            og Numeric, fg Numeric, calibration Numeric)''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS beers2(id INTEGER PRIMARY KEY, beer_name TEXT, 
+            og Numeric, fg Numeric, calibration Numeric)''')
+        self.cursor.execute('''SELECT beer_name from beers1 where id=1''')
+        idx = self.cursor.fetchone()
+        if idx == None:
+            self.cursor.execute('''INSERT INTO beers1(beer_name, og, fg, calibration) VALUES (?,?,?,?)''', 
+                ("Beer", 0, 0, 2.25))
+            self.cursor.execute('''INSERT INTO beers2(beer_name, og, fg, calibration) VALUES (?,?,?,?)''', 
+                ("Beer", 0, 0, 2.25))
+        else:
+            print "DataBase has been initialized already."
+
     def close(self):
         self.db.close()
     
@@ -20,25 +35,34 @@ class BevDataBase():
         if last_id != None:
             return last_id
         else:
-            return "Something is wrong. No pours found."
+            return 0
 
     def last_beer_tap1_oz(self):
-        idx = self.last_beer_tap1_id()
-        self.cursor.execute('''SELECT oz_pour from bevs_tap1 where id = ?''', (idx,))
-        oz1 = self.cursor.fetchone()[0]
-        if oz1 != None:
+        if self.last_beer_tap1_id() != 0:
+            idx = self.last_beer_tap1_id()
+            self.cursor.execute('''SELECT oz_pour from bevs_tap1 where id = ?''', (idx,))
+            oz1 = self.cursor.fetchone()[0]
             return round(oz1,1)
         else:
-            return "0"
+            return 0
+
+    def last_beer_tap1_ml(self):
+        if self.last_beer_tap1_id() != 0:
+            idx = self.last_beer_tap1_id()
+            self.cursor.execute('''SELECT ml_pour from bevs_tap1 where id = ?''', (idx,))
+            ml1 = self.cursor.fetchone()[0]
+            return round(ml1,1)
+        else:
+            return 0
 
     def last_beer_tap1_time(self):
-        idx = self.last_beer_tap1_id()
-        self.cursor.execute('''SELECT date_pour from bevs_tap1 where id = ?''', (idx,))
-        time1 = self.cursor.fetchone()[0]
-        if time1 != None:
+        if self.last_beer_tap1_id() != 0:
+            idx = self.last_beer_tap1_id()
+            self.cursor.execute('''SELECT date_pour from bevs_tap1 where id = ?''', (idx,))
+            time1 = self.cursor.fetchone()[0]
             return time1
         else:
-            return "0"
+            return 0
 
     def last_beer_tap2_id(self):
         self.cursor.execute('''SELECT max(id) from bevs_tap2''')
@@ -46,20 +70,29 @@ class BevDataBase():
         if last_id != None:
             return last_id
         else:
-            return "0"
+            return 0
 
     def last_beer_tap2_oz(self):
-        if self.last_beer_tap2_id() != "0":
-            idx = self.last_beer_tap1_id()
+        if self.last_beer_tap2_id() != 0:
+            idx = self.last_beer_tap2_id()
             self.cursor.execute('''SELECT oz_pour from bevs_tap2 where id = ?''', (idx,))
             oz2 = self.cursor.fetchone()[0]
             return round(oz2,1)
         else:
-            return "0"
+            return 0
+
+    def last_beer_tap2_ml(self):
+        if self.last_beer_tap2_id() != 0:
+            idx = self.last_beer_tap2_id()
+            self.cursor.execute('''SELECT ml_pour from bevs_tap2 where id = ?''', (idx,))
+            ml2 = self.cursor.fetchone()[0]
+            return round(ml2,1)
+        else:
+            return 0
 
     def last_beer_tap2_time(self):
-        if self.last_beer_tap2_id() != "0":
-            idx = self.last_beer_tap1_id()
+        if self.last_beer_tap2_id() != 0:
+            idx = self.last_beer_tap2_id()
             self.cursor.execute('''SELECT date_pour from bevs_tap2 where id = ?''', (idx,))
             time2 = self.cursor.fetchone()[0]
             return time2
@@ -90,7 +123,7 @@ class BevDataBase():
         self.cursor.execute('''SELECT sum(oz_pour) from bevs_tap2''')
         vol2 = self.cursor.fetchone()[0]
         if vol2 != None:
-            remaining_vol1 = starting_vol - vol2
+            remaining_vol2 = starting_vol - vol2
             return round((remaining_vol2 / 16),1)
         else:
             return "No"

@@ -9,9 +9,18 @@
         <li>ABV: {{abv1}}%</li>
         <li>Keg Volume: {{ pints1_left }} Pints remaining</li>
         <li>Number of beers drank so far : {{ last1 }}</li>
-        <li>Last pour volume: {{ last_oz1 }} oz</li>
-        <li>Time of last pour: {{ time1 }}</li>
+        </ul>
+        <ul>
+        <h3>Last Pour</h3>
+        <li>{{ last_oz1 }} oz / {{ last_ml1 }} ml</li>
+        <li>Calories : {{ calories1 }}</li>
+        <li>Time : {{ time1 }}</li>
       </ul>
+      Previous Pours<br>
+      1. {{ second_to_last1}} <br>
+      2. {{ third_to_last1}} <br>
+      3. {{ fourth_to_last1}} <br>
+      4. {{ fifth_to_last1}} <br>
     </div>
     <div class="tap2">
     <h3>Right Tap</h3>
@@ -21,9 +30,18 @@
         <li>ABV: {{abv2}}%</li>
         <li>Keg Volume: {{ pints2_left }} Pints remaining</li>
         <li>Number of beers drank so far : {{ last2 }}</li>
-        <li>Last pour volume: {{ last_oz2 }} oz</li>
-        <li>Time of last pour: {{ time2 }}</li>
       </ul>
+      <ul>
+        <h3>Last Pour</h3>
+        <li>{{ last_oz2 }} oz / {{ last_ml2 }} ml</li>
+        <li>Calories : {{ calories2 }}</li>
+        <li>Time : {{ time2 }}</li>
+      </ul>
+      Previous Pours<br>
+      1. {{ second_to_last2}} <br>
+      2. {{ third_to_last2}} <br>
+      3. {{ fourth_to_last2}} <br>
+      4. {{ fifth_to_last2}} <br>
     </div>
   </div>
 {% endblock %}
