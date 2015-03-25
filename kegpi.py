@@ -20,13 +20,13 @@ config = ConfigParser.ConfigParser()
 config.read("tap_config.ini")
 
 #Database config.
-db = sqlite3.connect('beverage_db')
+db = sqlite3.connect('beverage_db', check_same_thread=False)
 cursor = db.cursor()
 cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap1(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
     clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC, pour_count INTEGER)''')
 cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap2(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
     clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC, pour_count INTEGER)''')
-#db.commit()
+db.commit()
 
 #FlowMeter class.
 f = FlowMeter()

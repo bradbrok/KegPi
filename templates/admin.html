@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h1>Sign In</h1>
+  <form action="" method="post" name="login">
+      {{ form.hidden_tag() }}
+      <p>
+          Please enter your password:<br>
+          {{ form.name(size=80) }}<br>
+      </p>
+  </form>
+{% endblock %}

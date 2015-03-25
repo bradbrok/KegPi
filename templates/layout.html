@@ -2,13 +2,16 @@
 <html>
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='kegpicss.css') }}">
   <head>
-    <title>KegPi</title>    
+    <title>KegPi</title> 
   </head>
   <body>
    
     <header>
       <div class="container">
         <h1 class="logo">KegPi</h1>
+          <form action="{{ url_for('static', filename='[admin.html]') }}">
+            <input type="submit" value="Admin">
+          </form>
       </div>
     </header> 
      

@@ -12,7 +12,7 @@ import time
 
 f = FlowMeter()
 
-class Admin():
+class AdminActions():
 
     def __init__(self):
         self.db = sqlite3.connect('beverage_db', check_same_thread=False)

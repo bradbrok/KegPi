@@ -2,30 +2,28 @@
 {% block content %}
   <div class="taps">
     <div class="tap1">
-    <h2>Keg 1</h2>
-    <h3>Beer Name 1</h3>
+    <h3>Left Tap</h3>
+    <h3>{{ beer_name1 }}</h3>
       <ul class="stats1">
-        <li>OG: {{og2}} / FG: {{fg1}}</li>
+        <li>OG: {{og1}} / FG: {{fg1}}</li>
         <li>ABV: {{abv1}}%</li>
-        <li>Keg1 Volume: {{ pints1_left }} Pints remaining</li>
+        <li>Keg Volume: {{ pints1_left }} Pints remaining</li>
         <li>Number of beers drank so far : {{ last1 }}</li>
         <li>Last pour volume: {{ last_oz1 }} oz</li>
         <li>Time of last pour: {{ time1 }}</li>
       </ul>
     </div>
     <div class="tap2">
-    <h2>Keg 2</h2>
-    <h3>Beer Name 2</h3>
+    <h3>Right Tap</h3>
+    <h3>{{ beer_name2 }}</h3>
       <ul class="stats2">
         <li>OG: {{og2}} / FG: {{fg2}} </li>
         <li>ABV: {{abv2}}%</li>
-        <li>Keg1 Volume: {{ pints2_left }} Pints remaining</li>
+        <li>Keg Volume: {{ pints2_left }} Pints remaining</li>
         <li>Number of beers drank so far : {{ last2 }}</li>
         <li>Last pour volume: {{ last_oz2 }} oz</li>
         <li>Time of last pour: {{ time2 }}</li>
       </ul>
     </div>
-  </div>
-
   </div>
 {% endblock %}
