@@ -2,7 +2,7 @@
 
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 from bevdb import *
-from flowmeter import *
+#from flowmeter import *
 from admin import * #This is going to grab our calibration fg og and beer names too!
 import sqlite3
 import ConfigParser
