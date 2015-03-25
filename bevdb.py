@@ -143,6 +143,11 @@ class BevDataBase():
         fg = self.cursor.fetchone()[0]
         return fg
 
+    def calbiration1(self):
+        self.cursor.execute('''SELECT calibration from beers1 where id=1''')
+        cal = self.cursor.fetchone()[0]
+        return cal
+
     def beer_name2(self):
         self.cursor.execute('''SELECT beer_name from beers2 where id=1''')
         beer = self.cursor.fetchone()[0]
@@ -157,6 +162,11 @@ class BevDataBase():
         self.cursor.execute('''SELECT fg from beers2 where id=1''')
         fg = self.cursor.fetchone()[0]
         return fg
+
+    def calbiration2(self):
+        self.cursor.execute('''SELECT calibration from beers2 where id=1''')
+        cal = self.cursor.fetchone()[0]
+        return cal
 
     #Drop the tables for the keg, store totals only in db.
     def kick_keg1(self):

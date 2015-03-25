@@ -11,9 +11,12 @@ import time
 import RPi.GPIO as GPIO
 import ConfigParser
 import sqlite3
+from bevdb import *
+
+bevdb = BevDataBase()
 
 #This will soon update when I get around to using this app.
-beers_drank_while_coding_this = "9"
+beers_drank_while_coding_this = "10"
 
 #The ini settings to load calibration constants from.
 config = ConfigParser.ConfigParser()
@@ -40,18 +43,16 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(flow_pin_tap1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(flow_pin_tap2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-tap = 1
-
 #This is the def for the callback for either tap.
 def to_pi_tap1(channel):
-    tap = 1
+    tap_no = 1
     f.update()
-    f.calibration = float(config.get('taps', 'calibration_0'))
+    f.calibration = bevdb.calibration1()
 
 def to_pi_tap2(channel):
-    tap = 2
+    tap_no = 2
     f.update()
-    f.calibration = float(config.get('taps', 'calibration_1'))
+    f.calibration = bevdb.calibration2()
 
 
 #Add the event detection to trigger callback.
@@ -59,17 +60,18 @@ GPIO.add_event_detect(flow_pin_tap1, GPIO.RISING, callback=to_pi_tap1)
 GPIO.add_event_detect(flow_pin_tap2, GPIO.RISING, callback=to_pi_tap2)
 
 #Called when the pour event happens.
-def update_db():
+def update_db(tap):
+    tap = tap_value
     time_pour = time.time()
     date_pour = time.ctime()
     clicks = f.last_clicks
     ml_pour = f.to_ml
     oz_pour = f.last_pour_oz
-    if (tap == 1):
+    if (tap_value == 1):
         cursor.execute('''INSERT INTO bevs_tap1(time_pour, date_pour, clicks, ml_pour, oz_pour)
         VALUES (?,?,?,?,?)''', (time_pour, date_pour, clicks, ml_pour, oz_pour))
         db.commit()
-    elif (tap == 2):
+    elif (tap_value == 2):
         cursor.execute('''INSERT INTO bevs_tap2(time_pour, date_pour, clicks, ml_pour, oz_pour)
         VALUES (?,?,?,?,?)''', (time_pour, date_pour, clicks, ml_pour, oz_pour))
         db.commit()
@@ -82,7 +84,7 @@ try:
         time.sleep(1)
         f.last_pour_func()
         if f.pour_event_occured == True:
-            update_db()
+            update_db(tap_no)
         else:
             pass
 
