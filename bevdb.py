@@ -1,5 +1,6 @@
 import sqlite3
 import sys
+import time
 
 #This delivers all the data from the db to the main app.
 class BevDataBase(object):
@@ -99,11 +100,117 @@ class BevDataBase(object):
             return "No pours recorded"
 
     #Show basic details of just the last 5 beers. Pass this as dict.
-    def last_five_tap1(self):
-        pass
+    def second_beer1(self):
+        if self.last_beer_tap1_id() > 1:
+            idx = self.last_beer_tap1_id()
+            idy = idx - 1
+            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap1 where id = ?''', (idy,))
+            li = self.cursor.fetchall()
+            lix = li[0]
+            ml = lix[0]
+            oz = lix[1]
+            dt = lix[2]
+            return int(ml), "ml /", round(oz,1), "oz", "@", dt 
+        else:
+            return "None"
 
-    def last_five_tap2(self):
-        pass
+    def third_beer1(self):
+        if self.last_beer_tap1_id() > 2:
+            idx = self.last_beer_tap1_id()
+            idy = idx - 2
+            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap1 where id = ?''', (idy,))
+            li = self.cursor.fetchall()
+            lix = li[0]
+            ml = lix[0]
+            oz = lix[1]
+            dt = lix[2]
+            return int(ml), "ml", round(oz,1), "oz", "@", dt 
+        else:
+            return "None"
+
+    def fourth_beer1(self):
+        if (self.last_beer_tap2_id() - 3) > 3:
+            idx = self.last_beer_tap1_id()
+            idy = idx - 3
+            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap1 where id = ?''', (idy,))
+            li = self.cursor.fetchall()
+            lix = li[0]
+            ml = lix[0]
+            oz = lix[1]
+            dt = lix[2]
+            return int(ml), "ml", round(oz,1), "oz", "@", dt 
+        else:
+            return "None"
+
+    def fifth_beer1(self):
+        if (self.last_beer_tap2_id() - 4) > 4:
+            idx = self.last_beer_tap1_id()
+            idy = idx - 4
+            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap1 where id = ?''', (idx,))
+            li = self.cursor.fetchall()
+            lix = li[0]
+            ml = lix[0]
+            oz = lix[1]
+            dt = lix[2]
+            return int(ml), "ml", round(oz,1), "oz", "@", dt 
+        else:
+            return "None"
+
+    def second_beer2(self):
+        if self.last_beer_tap2_id() > 1:
+            idx = (self.last_beer_tap2_id() + 1)
+            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap2 where id = ?''', (idx,))
+            li = self.cursor.fetchall()
+            lix = li[0]
+            ml = lix[0]
+            oz = lix[1]
+            dt = lix[2]
+            print li
+            return int(ml), "ml /", round(oz,1), "oz", "@", dt 
+        else:
+            return "None"
+
+    def third_beer2(self):
+        if self.last_beer_tap2_id() > 2:
+            idx = (self.last_beer_tap2_id() + 2)
+            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap2 where id = ?''', (idx,))
+            li = self.cursor.fetchall()
+            lix = li[0]
+            ml = lix[0]
+            oz = lix[1]
+            dt = lix[2]
+            print li
+            return int(ml), "ml", round(oz,1), "oz", "@", dt 
+        else:
+            return "None"
+
+    def fourth_beer2(self):
+        if self.last_beer_tap2_id() > 3:
+            idx = (self.last_beer_tap2_id() + 3)
+            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap2 where id = ?''', (idx,))
+            li = self.cursor.fetchall()
+            lix = li[0]
+            ml = lix[0]
+            oz = lix[1]
+            dt = lix[2]
+            print li
+            return int(ml), "ml", round(oz,1), "oz", "@", dt 
+        else:
+            return "None"
+
+    def fifth_beer2(self):
+        if self.last_beer_tap2_id() > 4:
+            idx = (self.last_beer_tap2_id() + 4)
+            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap2 where id = ?''', (idx,))
+            li = self.cursor.fetchall()
+            lix = li[0]
+            ml = lix[0]
+            oz = lix[1]
+            dt = lix[2]
+            print li
+            return int(ml), "ml", round(oz,1), "oz", "@", dt 
+        else:
+            return "None"
 
     #Keg volumes initialzied from Kegs class.
     #Add all volumes in ml together and find the percentage left.

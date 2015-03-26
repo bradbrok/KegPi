@@ -12,7 +12,6 @@ import ConfigParser
 from functools import wraps
 
 app = Flask(__name__)
-app.config.from_object('config')
 app.debug = True
 
 admin = AdminActions()
@@ -68,6 +67,10 @@ def dashboard():
     last_ml1 = db.last_beer_tap1_ml()
     time1 = db.last_beer_tap1_time()
     pints1_left = db.keg_volume1_pints()
+    second1 = db.second_beer1()
+    third1 = db.third_beer1()
+    fourth1 = db.fourth_beer1()
+    fifth1 = db.fifth_beer1()
     og1 = db.og1()
     fg1 = db.fg1()
     abv1 = gravity_calc(og1, fg1)
@@ -79,6 +82,10 @@ def dashboard():
     last_ml2 = db.last_beer_tap2_ml()
     time2 = db.last_beer_tap2_time()
     pints2_left = db.keg_volume2_pints()
+    second2 = db.second_beer2()
+    third2 = db.third_beer2()
+    fourth2 = db.fourth_beer2()
+    fifth2 = db.fifth_beer2()
     og2 = db.og2()
     fg2 = db.fg2()
     abv2 = gravity_calc(og2, fg2)
@@ -95,6 +102,10 @@ def dashboard():
         fg1 = fg1,
         abv1 = abv1,
         calories1 = calories1,
+        second1 = second1,
+        third1 = third1,
+        fourth1 = fourth1,
+        fifth1 = fifth1,
         #Tap2
         beer_name2 = beer_name2,
         last2 = last2,
@@ -103,6 +114,10 @@ def dashboard():
         time2 = time2,
         pints2_left = pints2_left,
         calories2 = calories2,
+        second2 = second2,
+        third2 = third2,
+        fourth2 = fourth2,
+        fifth2 = fifth2,
         og2 = og2,
         fg2 = fg2,
         abv2 = abv2
@@ -113,7 +128,10 @@ def dashboard():
 @app.route('/admin.html', methods=['GET', 'POST'])
 @requires_auth
 def admin():
-    return render_template('admin.html')
+
+    return render_template('admin.html',
+
+        )
 
 @app.route('/calibrate', methods=['GET', 'POST'])
 def calibrate_page():
