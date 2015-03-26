@@ -7,8 +7,11 @@ The Keg class will help us update our keg volumes and tap numbers associated wit
 each and every keg.
 """
 from flowmeter import *
+from bevdb import *
 import sqlite3
 import time
+
+bevdb = BevDataBase()
 
 f = FlowMeter()
 
@@ -22,15 +25,21 @@ class AdminActions():
         self.corny_keg_start_ml = 18927.05 #ml
         self.corny_keg_start_oz = 640.0 #oz
 
+
     def close(self):
         self.db.close()
 
     def calibrations_tap1(self, ml_cal):
         cal = f.calibrate(ml_cal)
         self.cursor.execute('''REPLACE INTO beers1 (calibration) Values (?)'''(cal))
+        self.db.commit()
+        return "Success"
 
-    def calibrations_tap2(self):
-        pass
+    def calibrations_tap2(self, ml_cal):
+        cal = f.calibrate(ml_cal)
+        self.cursor.execute('''REPLACE INTO beers2 (calibration) Values (?)'''(cal))
+        self.db.commit()
+        return "Success"
 
     def beer_name1_pos(self, name):
         pass
@@ -49,3 +58,20 @@ class AdminActions():
 
     def fg2_post(self, og):
         pass
+
+    #Drop the tables for the keg, store totals only in db. Then reinitialize kegs.
+    def kick_keg1(self):
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS kegs1(id INTEGER PRIMARY KEY, beer_name TEXT, date_kicked TEXT)''')
+        self.cursor.execute('''INSERT INTO kegs1(beer_name, date_kicked) VALUES (?,?)''', (bevdb.beer_name1, time.ctime()))
+        self.cursor.execute('''DROP TABLE beers1''')
+        self.cursor.execute('''INSERT INTO beers1(beer_name, og, fg, calibration) VALUES (?,?,?,?)''', ("Beer", 0, 0, 2.25))
+        self.db.commit()
+        return "Success!"
+
+    def kick_keg2(self):
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS kegs2(id INTEGER PRIMARY KEY, beer_name TEXT, date_kicked TEXT)''')
+        self.cursor.execute('''INSERT INTO kegs2(beer_name, date_kicked) VALUES (?,?)''', (bevdb.beer_name1, time.ctime()))
+        self.cursor.execute('''DROP TABLE beers2''')
+        self.cursor.execute('''INSERT INTO beers2(beer_name, og, fg, calibration) VALUES (?,?,?,?)''', ("Beer", 0, 0, 2.25))
+        self.db.commit()
+        return "Success!"

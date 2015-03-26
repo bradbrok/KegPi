@@ -9,10 +9,11 @@
     <header>
       <div class="container">
         <h1 class="logo">KegPi</h1>
-          <form action="{{ url_for('static', filename='[admin.html]') }}">
-            <input type="submit" value="Admin">
-          </form>
       </div>
+      <form method="POST">
+        {{ form.pin.label }} {{ form.pin(id='pin-field') }}
+        {{ form.submit() }}
+      </form>
     </header> 
      
     <div class="container">

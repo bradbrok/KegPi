@@ -68,6 +68,7 @@ class FlowMeter(object):
         else:
             self.calibration = (float(cal_input) / self.last_pour)
             print self.calibration, "ml in a click."
+            return self.calibration
 
     #GPIO detects the rising edge, and updates the current count.
     #Find the time of the last click.

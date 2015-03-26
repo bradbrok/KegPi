@@ -1,8 +1,7 @@
 import sqlite3
 import sys
-#from kegs import *
 
-#This class will interface with the Flask app.
+#This delivers all the data from the db to the main app.
 class BevDataBase():
 
     #keg = Kegs()
@@ -23,7 +22,7 @@ class BevDataBase():
             self.cursor.execute('''INSERT INTO beers2(beer_name, og, fg, calibration) VALUES (?,?,?,?)''', 
                 ("Beer", 0, 0, 2.25))
         else:
-            print "DataBase has been initialized already."
+            pass
 
     def close(self):
         self.db.close()
@@ -143,7 +142,7 @@ class BevDataBase():
         fg = self.cursor.fetchone()[0]
         return fg
 
-    def calbiration1(self):
+    def calibration1(self):
         self.cursor.execute('''SELECT calibration from beers1 where id=1''')
         cal = self.cursor.fetchone()[0]
         return cal
@@ -163,14 +162,7 @@ class BevDataBase():
         fg = self.cursor.fetchone()[0]
         return fg
 
-    def calbiration2(self):
+    def calibration2(self):
         self.cursor.execute('''SELECT calibration from beers2 where id=1''')
         cal = self.cursor.fetchone()[0]
         return cal
-
-    #Drop the tables for the keg, store totals only in db.
-    def kick_keg1(self):
-        pass
-
-    def kick_keg2(self):
-        pass

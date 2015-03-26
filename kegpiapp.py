@@ -1,9 +1,11 @@
 #!/usr/bin/python
 
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
+from flask.ext.wtf import Form
+from wtforms import StringField, SubmitField
+from wtforms.validators import Required
 from bevdb import *
-#from flowmeter import *
-from admin import * #This is going to grab our calibration fg og and beer names too!
+from admin import * #This is going to post our calibration, fg, og, and beer names too!
 import sqlite3
 import ConfigParser
 
@@ -20,8 +22,8 @@ def gravity_calc(og, fg):
     return round(abv, 1)
 
 def calorie_calc(og, fg, ml):
-    #These are a bit complicated, basically convert og and fg to plato, find the abw
-    #and then multiply by calories in the weight of alcohol content, then multiply by volume.
+    #These are a bit complicated, basically convert og and fg to plato or sg, then find the abw
+    #basically calculates by weight of carbs and alcohol. Carbs = 4cal/gram, alcohol = 7cal/gram
     pog = (-1 * 616.868) + (1111.14 * og) - (630.272 * (og ** 2)) + (135.997 * (og ** 3)) 
     pfg = (-1 * 616.868) + (1111.14 * fg) - (630.272 * (fg ** 2)) + (135.997 * (fg ** 3))
     abv = ((og - fg) / 0.75 * 100)
@@ -30,10 +32,21 @@ def calorie_calc(og, fg, ml):
     calories = ((6.9 * abv) + 4 * (rex - 0.1)) * fg * (ml /100)
     return round(calories, 1)
 
+class PinForm(Form):
+    pin = StringField('Admin: ', validators=[Required()])
+    submit = SubmitField('Submit')
+
 # Main page and dashboard.
 @app.route('/', methods=['GET', 'POST'])
 def dashboard():
     db.beers_init()
+    #Admin Link
+    pin = None
+    form = PinForm()
+    if form.validate_on_submit():
+        session['pin'] = form.pin.data
+        form.pin.data = ''
+
     #Tap 1
     beer_name1 = db.beer_name1()
     last1 = db.last_beer_tap1_id()
@@ -79,6 +92,8 @@ def dashboard():
         og2 = og2,
         fg2 = fg2,
         abv2 = abv2,
+        #Admin form
+        form=form, pin=session.get('pin')
         )
 
 @app.route('/admin', methods=['GET', 'POST'])
