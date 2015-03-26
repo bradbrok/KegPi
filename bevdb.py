@@ -2,7 +2,7 @@ import sqlite3
 import sys
 
 #This delivers all the data from the db to the main app.
-class BevDataBase():
+class BevDataBase(object):
 
     #keg = Kegs()
     def __init__(self):

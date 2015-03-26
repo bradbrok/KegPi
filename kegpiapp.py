@@ -1,21 +1,40 @@
 #!/usr/bin/python
 
-from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, Response
 from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField
 from wtforms.validators import Required
+#from auth import *
 from bevdb import *
 from admin import * #This is going to post our calibration, fg, og, and beer names too!
 import sqlite3
 import ConfigParser
+from functools import wraps
 
 app = Flask(__name__)
 app.config.from_object('config')
 app.debug = True
 
 admin = AdminActions()
-
 db = BevDataBase()
+
+def check_auth(username, password):
+    return username == 'beer' and password == 'beer'
+
+def authenticate():
+    return Response(
+    'Could not verify your access level for that URL.\n'
+    'You have to login with proper credentials', 401,
+    {'WWW-Authenticate': 'Basic realm="Login Required"'})
+
+def requires_auth(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if not auth or not check_auth(auth.username, auth.password):
+            return authenticate()
+        return f(*args, **kwargs)
+    return decorated
 
 def gravity_calc(og, fg):
     abv = ((og - fg) / 0.736 * 100)
@@ -41,11 +60,6 @@ class PinForm(Form):
 def dashboard():
     db.beers_init()
     #Admin Link
-    pin = None
-    form = PinForm()
-    if form.validate_on_submit():
-        session['pin'] = form.pin.data
-        form.pin.data = ''
 
     #Tap 1
     beer_name1 = db.beer_name1()
@@ -91,12 +105,13 @@ def dashboard():
         calories2 = calories2,
         og2 = og2,
         fg2 = fg2,
-        abv2 = abv2,
+        abv2 = abv2
         #Admin form
-        form=form, pin=session.get('pin')
+        #form=form, pin=session.get('pin')
         )
 
-@app.route('/admin', methods=['GET', 'POST'])
+@app.route('/admin.html', methods=['GET', 'POST'])
+@requires_auth
 def admin():
     return render_template('admin.html')
 

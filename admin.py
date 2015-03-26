@@ -15,7 +15,7 @@ bevdb = BevDataBase()
 
 f = FlowMeter()
 
-class AdminActions():
+class AdminActions(object):
 
     def __init__(self):
         self.db = sqlite3.connect('beverage_db', check_same_thread=False)
@@ -30,27 +30,31 @@ class AdminActions():
         self.db.close()
 
     def calibrations_tap1(self, ml_cal):
-        cal = f.calibrate(ml_cal)
-        self.cursor.execute('''REPLACE INTO beers1 (calibration) Values (?)'''(cal))
+        cal = (float(ml_cal) / f.last_pour)
+        self.cursor.execute('''REPLACE INTO beers1 (calibration) Values (?)'''(cal,))
         self.db.commit()
-        return "Success"
+        return "Success! Calibration is", cal, "ml per click!"
 
     def calibrations_tap2(self, ml_cal):
-        cal = f.calibrate(ml_cal)
-        self.cursor.execute('''REPLACE INTO beers2 (calibration) Values (?)'''(cal))
+        cal = (float(ml_cal) / f.last_pour)
+        self.cursor.execute('''REPLACE INTO beers2 (calibration) Values (?)'''(cal,))
+        self.db.commit()
+        return "Success! Calibration is", cal, "ml per click!"
+
+    def beer_name1_post(self, name):
+        self.cursor.execute('''REPLACE INTO beers1 (beer_name) Values (?)'''(name,))
         self.db.commit()
         return "Success"
 
-    def beer_name1_pos(self, name):
-        pass
+    def beer_name2_post(self, name):
+        self.cursor.execute('''REPLACE INTO beers2 (beer_name) Values (?)'''(name,))
+        self.db.commit()
+        return "Success"
 
     def og1_post(self, og):
         pass
 
     def fg1_post(self, og):
-        pass
-
-    def beer_name2_post(self, name):
         pass
 
     def og2_post(self, og):
@@ -65,6 +69,8 @@ class AdminActions():
         self.cursor.execute('''INSERT INTO kegs1(beer_name, date_kicked) VALUES (?,?)''', (bevdb.beer_name1, time.ctime()))
         self.cursor.execute('''DROP TABLE beers1''')
         self.cursor.execute('''INSERT INTO beers1(beer_name, og, fg, calibration) VALUES (?,?,?,?)''', ("Beer", 0, 0, 2.25))
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap1(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
+            clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC, pour_count INTEGER)''')
         self.db.commit()
         return "Success!"
 
@@ -73,5 +79,7 @@ class AdminActions():
         self.cursor.execute('''INSERT INTO kegs2(beer_name, date_kicked) VALUES (?,?)''', (bevdb.beer_name1, time.ctime()))
         self.cursor.execute('''DROP TABLE beers2''')
         self.cursor.execute('''INSERT INTO beers2(beer_name, og, fg, calibration) VALUES (?,?,?,?)''', ("Beer", 0, 0, 2.25))
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap1(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
+            clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC, pour_count INTEGER)''')
         self.db.commit()
         return "Success!"
