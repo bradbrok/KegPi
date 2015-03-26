@@ -110,7 +110,9 @@ class BevDataBase(object):
             ml = lix[0]
             oz = lix[1]
             dt = lix[2]
-            return int(ml), "ml /", round(oz,1), "oz", "@", dt 
+            if dt == time.strftime('%m/%d/%y'):
+                dt = "Today"
+            return "%s oz / %d ml - %s" % (round(oz,1), ml, dt)
         else:
             return "None"
 
@@ -124,12 +126,14 @@ class BevDataBase(object):
             ml = lix[0]
             oz = lix[1]
             dt = lix[2]
-            return int(ml), "ml", round(oz,1), "oz", "@", dt 
+            if dt == time.strftime('%m/%d/%y'):
+                dt = "Today"
+            return "%s oz / %d ml - %s" % (round(oz,1), ml, dt)
         else:
             return "None"
 
     def fourth_beer1(self):
-        if (self.last_beer_tap2_id() - 3) > 3:
+        if self.last_beer_tap1_id() > 3:
             idx = self.last_beer_tap1_id()
             idy = idx - 3
             self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap1 where id = ?''', (idy,))
@@ -138,77 +142,89 @@ class BevDataBase(object):
             ml = lix[0]
             oz = lix[1]
             dt = lix[2]
-            return int(ml), "ml", round(oz,1), "oz", "@", dt 
+            if dt == time.strftime('%m/%d/%y'):
+                dt = "Today"
+            return "%s oz / %d ml - %s" % (round(oz,1), ml, dt)
         else:
             return "None"
 
     def fifth_beer1(self):
-        if (self.last_beer_tap2_id() - 4) > 4:
+        if self.last_beer_tap1_id() > 4:
             idx = self.last_beer_tap1_id()
             idy = idx - 4
-            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap1 where id = ?''', (idx,))
+            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap1 where id = ?''', (idy,))
             li = self.cursor.fetchall()
             lix = li[0]
             ml = lix[0]
             oz = lix[1]
             dt = lix[2]
-            return int(ml), "ml", round(oz,1), "oz", "@", dt 
+            if dt == time.strftime('%m/%d/%y'):
+                dt = "Today"
+            return "%s oz / %d ml - %s" % (round(oz,1), ml, dt)
         else:
             return "None"
 
     def second_beer2(self):
         if self.last_beer_tap2_id() > 1:
-            idx = (self.last_beer_tap2_id() + 1)
-            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap2 where id = ?''', (idx,))
+            idx = self.last_beer_tap2_id()
+            idy = idx - 1
+            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap2 where id = ?''', (idy,))
             li = self.cursor.fetchall()
             lix = li[0]
             ml = lix[0]
             oz = lix[1]
             dt = lix[2]
-            print li
-            return int(ml), "ml /", round(oz,1), "oz", "@", dt 
+            if dt == time.strftime('%m/%d/%y'):
+                dt = "Today"
+            return "%s oz / %d ml - %s" % (round(oz,1), ml, dt)
         else:
             return "None"
 
     def third_beer2(self):
         if self.last_beer_tap2_id() > 2:
-            idx = (self.last_beer_tap2_id() + 2)
-            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap2 where id = ?''', (idx,))
+            idx = self.last_beer_tap2_id()
+            idy = idx - 2
+            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap2 where id = ?''', (idy,))
             li = self.cursor.fetchall()
             lix = li[0]
             ml = lix[0]
             oz = lix[1]
             dt = lix[2]
-            print li
-            return int(ml), "ml", round(oz,1), "oz", "@", dt 
+            if dt == time.strftime('%m/%d/%y'):
+                dt = "Today"
+            return "%s oz / %d ml - %s" % (round(oz,1), ml, dt)
         else:
             return "None"
 
     def fourth_beer2(self):
         if self.last_beer_tap2_id() > 3:
-            idx = (self.last_beer_tap2_id() + 3)
-            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap2 where id = ?''', (idx,))
+            idx = self.last_beer_tap2_id()
+            idy = idx - 3
+            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap2 where id = ?''', (idy,))
             li = self.cursor.fetchall()
             lix = li[0]
             ml = lix[0]
             oz = lix[1]
             dt = lix[2]
-            print li
-            return int(ml), "ml", round(oz,1), "oz", "@", dt 
+            if dt == time.strftime('%m/%d/%y'):
+                dt = "Today"
+            return "%s oz / %d ml - %s" % (round(oz,1), ml, dt)
         else:
             return "None"
 
     def fifth_beer2(self):
         if self.last_beer_tap2_id() > 4:
-            idx = (self.last_beer_tap2_id() + 4)
-            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap2 where id = ?''', (idx,))
+            idx = self.last_beer_tap2_id()
+            idy = idx - 4
+            self.cursor.execute('''SELECT ml_pour, oz_pour, date_pour from bevs_tap2 where id = ?''', (idy,))
             li = self.cursor.fetchall()
             lix = li[0]
             ml = lix[0]
             oz = lix[1]
             dt = lix[2]
-            print li
-            return int(ml), "ml", round(oz,1), "oz", "@", dt 
+            if dt == time.strftime('%m/%d/%y'):
+                dt = "Today"
+            return "%s oz / %d ml - %s" % (round(oz,1), ml, dt)
         else:
             return "None"
 

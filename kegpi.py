@@ -77,7 +77,7 @@ GPIO.add_event_detect(flow_pin_tap2, GPIO.RISING, callback=to_pi_tap2)
 #Called when the pour event happens.
 def update_db():
     tap_value = taps.tap_no
-    time_pour = time.time()
+    time_pour = time.strftime('%h:%M %p')
     date_pour = time.strftime('%m/%d/%y')
     clicks = f.last_clicks
     ml_pour = f.to_ml

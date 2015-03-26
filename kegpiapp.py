@@ -4,7 +4,6 @@ from flask import Flask, request, session, g, redirect, url_for, abort, render_t
 from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField
 from wtforms.validators import Required
-#from auth import *
 from bevdb import *
 from admin import * #This is going to post our calibration, fg, og, and beer names too!
 import sqlite3
@@ -18,6 +17,7 @@ admin = AdminActions()
 db = BevDataBase()
 
 def check_auth(username, password):
+    #lol, need to hash these in the db.
     return username == 'beer' and password == 'beer'
 
 def authenticate():
@@ -58,8 +58,6 @@ class PinForm(Form):
 @app.route('/', methods=['GET', 'POST'])
 def dashboard():
     db.beers_init()
-    #Admin Link
-
     #Tap 1
     beer_name1 = db.beer_name1()
     last1 = db.last_beer_tap1_id()
@@ -121,8 +119,6 @@ def dashboard():
         og2 = og2,
         fg2 = fg2,
         abv2 = abv2
-        #Admin form
-        #form=form, pin=session.get('pin')
         )
 
 @app.route('/admin.html', methods=['GET', 'POST'])
