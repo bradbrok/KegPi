@@ -18,7 +18,7 @@ f = FlowMeter()
 bevdb = BevDataBase()
 
 #This will soon update when I get around to using this app.
-beers_drank_while_coding_this = "11"
+beers_drank_while_coding_this = "12"
 
 #The ini settings to load calibration constants from.
 config = ConfigParser.ConfigParser()

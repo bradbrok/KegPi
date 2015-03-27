@@ -122,13 +122,13 @@ class TapAdmin1(Form):
     beer_name1 = StringField('Beer Name')
     og1 = StringField('Original Gravity')
     fg1 = StringField('Final Gravity')
-    submit = SubmitField('Submit')
+    submit1 = SubmitField('Submit')
 
 class TapAdmin2(Form):
     beer_name2 = StringField('Beer Name')
     og2 = StringField('Original Gravity')
     fg2 = StringField('Final Gravity')
-    submit = SubmitField('Submit')
+    submit2 = SubmitField('Submit')
 
 @app.route('/admin', methods=['GET', 'POST'])
 @requires_auth
@@ -139,9 +139,9 @@ def admin():
         admin.beer_name1 = form1.beer_name1.data
         admin.og1 = form1.og1.data
         admin.fg1 = form1.fg1.data
-        if admin.og1 > 1:
+        if admin.og1 != '' and admin.og1 > 1:
             admin.og1_post()
-        if admin.fg1 > 0 and admin.fg1 < 2:
+        if admin.fg1 != '' and admin.fg1 > 1:
             admin.fg1_post()
         if admin.beer_name1 != '':
             admin.beer_name1_post()
@@ -150,9 +150,9 @@ def admin():
         admin.beer_name2 = form2.beer_name2.data
         admin.og2 = form2.og2.data
         admin.fg2 = form2.fg2.data
-        if admin.og2 > 1:
+        if admin.og2 != '' and admin.og2 > 1:
             admin.og2_post()
-        if admin.fg2 > 0 and admin.fg2 < 2:
+        if admin.fg2 != '' and admin.fg2 > 1:
             admin.fg2_post()
         if admin.beer_name2 != '':
             admin.beer_name2_post()
