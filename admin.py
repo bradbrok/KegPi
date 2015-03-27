@@ -25,6 +25,15 @@ class AdminActions(object):
         self.corny_keg_start_ml = 18927.05 #ml
         self.corny_keg_start_oz = 640.0 #oz
 
+        #Store these to be called
+        self.og1 = 0
+        self.fg1 = 0
+        self.beer_name1 = ''
+
+        self.og2 = 0
+        self.fg2 = 0
+        self.beer_name2 = ''
+
 
     def close(self):
         self.db.close()
@@ -41,27 +50,35 @@ class AdminActions(object):
         self.db.commit()
         return "Success! Calibration is", cal, "ml per click!"
 
-    def beer_name1_post(self, name):
-        self.cursor.execute('''REPLACE INTO beers1 (beer_name) Values (?)'''(name,))
+    def beer_name1_post(self):
+        self.cursor.execute('''UPDATE beers1 set beer_name=? where id=1''',[self.beer_name1])
         self.db.commit()
         return "Success"
 
-    def beer_name2_post(self, name):
-        self.cursor.execute('''REPLACE INTO beers2 (beer_name) Values (?)'''(name,))
+    def beer_name2_post(self):
+        self.cursor.execute('''UPDATE beers2 set beer_name=? where id=1''',[self.beer_name2])
         self.db.commit()
         return "Success"
 
-    def og1_post(self, og):
-        pass
+    def og1_post(self):
+        self.cursor.execute('''UPDATE beers1 set og=? where id=1''',[self.og1])
+        self.db.commit()
+        print "Success"
 
-    def fg1_post(self, og):
-        pass
+    def fg1_post(self):
+        self.cursor.execute('''UPDATE beers1 set fg=? where id=1''',[self.fg1])
+        self.db.commit()
+        return "Success"
 
-    def og2_post(self, og):
-        pass
+    def og2_post(self):
+        self.cursor.execute('''UPDATE beers2 set og=? where id=1''',[self.og2])
+        self.db.commit()
+        return "Success"
 
-    def fg2_post(self, og):
-        pass
+    def fg2_post(self):
+        self.cursor.execute('''UPDATE beers2 set fg=? where id=1''',[self.fg2])
+        self.db.commit()
+        return "Success"
 
     #Drop the tables for the keg, store totals only in db. Then reinitialize kegs.
     def kick_keg1(self):

@@ -9,13 +9,15 @@ from admin import * #This is going to post our calibration, fg, og, and beer nam
 import sqlite3
 import ConfigParser
 from functools import wraps
-
+#Configs
 app = Flask(__name__)
 app.debug = True
-
-admin = AdminActions()
+app.secret_key = 'beer'
+WTF_CSRF_ENABLED = False
+#Class calls
+#admin = AdminActions()
 db = BevDataBase()
-
+#Misc functions
 def check_auth(username, password):
     #lol, need to hash these in the db.
     return username == 'beer' and password == 'beer'
@@ -49,10 +51,6 @@ def calorie_calc(og, fg, ml):
     rex = (0.1808 * pog) + (0.8192 * pfg)
     calories = ((6.9 * abv) + 4 * (rex - 0.1)) * fg * (ml /100)
     return round(calories, 1)
-
-class PinForm(Form):
-    pin = StringField('Admin: ', validators=[Required()])
-    submit = SubmitField('Submit')
 
 # Main page and dashboard.
 @app.route('/', methods=['GET', 'POST'])
@@ -118,16 +116,52 @@ def dashboard():
         fifth2 = fifth2,
         og2 = og2,
         fg2 = fg2,
-        abv2 = abv2
-        )
+        abv2 = abv2)
+#Forms
+class TapAdmin1(Form):
+    beer_name1 = StringField('Beer Name')
+    og1 = StringField('Original Gravity')
+    fg1 = StringField('Final Gravity')
+    submit = SubmitField('Submit')
 
-@app.route('/admin.html', methods=['GET', 'POST'])
+class TapAdmin2(Form):
+    beer_name2 = StringField('Beer Name')
+    og2 = StringField('Original Gravity')
+    fg2 = StringField('Final Gravity')
+    submit = SubmitField('Submit')
+
+@app.route('/admin', methods=['GET', 'POST'])
 @requires_auth
 def admin():
+    admin = AdminActions()
+    form1 = TapAdmin1()
+    if form1.validate_on_submit():
+        admin.beer_name1 = form1.beer_name1.data
+        admin.og1 = form1.og1.data
+        admin.fg1 = form1.fg1.data
+        if admin.og1 > 1:
+            admin.og1_post()
+        if admin.fg1 > 0 and admin.fg1 < 2:
+            admin.fg1_post()
+        if admin.beer_name1 != '':
+            admin.beer_name1_post()
+    form2 = TapAdmin2()
+    if form2.validate_on_submit():
+        admin.beer_name2 = form2.beer_name2.data
+        admin.og2 = form2.og2.data
+        admin.fg2 = form2.fg2.data
+        if admin.og2 > 1:
+            admin.og2_post()
+        if admin.fg2 > 0 and admin.fg2 < 2:
+            admin.fg2_post()
+        if admin.beer_name2 != '':
+            admin.beer_name2_post()
+    return render_template('/admin.html',form1=form1, form2=form2)
 
-    return render_template('admin.html',
-
-        )
+@app.route('/update', methods=['POST'])
+def admin_update():
+    return redirect('/admin')
+    
 
 @app.route('/calibrate', methods=['GET', 'POST'])
 def calibrate_page():

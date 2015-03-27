@@ -1,7 +1,54 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
+<header>
 ADMIN CONTROLS ALL YOUR BASE ARE BELONG TO US!
+</header>
+<div class="tap1">
+<h3>Left Tap:</h3>
+<form method="post" action="#">
+    <form method="post" action="#">
+    {{ form1.hidden_tag() }}
+    {{ form1.beer_name1 }}
+    Beer Name
+    <br>
+    {{ form1.hidden_tag() }}
+    {{ form1.og1 }}
+    OG<br>
+    <form method="post" action="#">
+    {{ form1.hidden_tag() }}
+    {{ form1.fg1 }}
+    FG<br>
+    <input type="submit"/>
+</form>
+
+<h3>Danger Zone!!</h3>
+	<form action="/kick1" method="post">
+		<input type="submit" value="Kick the keg?"></input>
+	</form>
+</div>
+<div class="tap2">
+<h3>Right Tap:</h3>
+<form method="post" action="#">
+    <form method="post" action="#">
+    {{ form2.hidden_tag() }}
+    {{ form2.beer_name2 }}
+    Beer Name
+    <br>
+    {{ form2.hidden_tag() }}
+    {{ form2.og2 }}
+    OG<br>
+    <form method="post" action="#">
+    {{ form2.hidden_tag() }}
+    {{ form2.fg2 }}
+    FG<br>
+    <input type="submit"/>
+</form>
+
+<h3>Danger Zone!!</h3>
+	<form action="/kick2" method="post">
+		<input type="submit" value="Kick the keg?"></input>
+	</form>
+</div>
 
 {% endblock %}
