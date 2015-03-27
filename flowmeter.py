@@ -42,6 +42,7 @@ class FlowMeter(object):
         self.drink_count = 0
         self.enabled = True
         self.calibration = 0 #2.25
+        self.cal_input = 0
         self.oz_per_click = 0.08454
         self.ml_in_a_pint = 473.176
         self.ml_in_an_oz = 29.5735
@@ -59,14 +60,14 @@ class FlowMeter(object):
         print "Please measure your last pour in ml, and then enter the volume:"
         print "Hint: The bigger the pour, the more accurate the calibration."
         #cal_input = yield ###raw_input("> ")
-        if cal_input == '':
+        if self.cal_input == '':
             print "You didn't input anything, please try again."
-            cal_input = 0
-        elif cal_input.isdigit() != True: #This doesn't seem to work for floats.
+            self.cal_input = 0
+        elif self.cal_input.isdigit() != True: #This doesn't seem to work for floats.
             print "That is not a number. Please retry the calibration."
-            cal_input = 0
+            self.cal_input = 0
         else:
-            self.calibration = (float(cal_input) / self.last_pour)
+            self.calibration = (float(self.cal_input) / self.last_pour)
             print self.calibration, "ml in a click."
             return self.calibration
 

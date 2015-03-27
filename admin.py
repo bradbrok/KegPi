@@ -29,24 +29,26 @@ class AdminActions(object):
         self.og1 = 0
         self.fg1 = 0
         self.beer_name1 = ''
+        self.ml_cal1 = 2.25
 
         self.og2 = 0
         self.fg2 = 0
         self.beer_name2 = ''
+        self.ml_cal2 = 2.25
 
 
     def close(self):
         self.db.close()
 
-    def calibrations_tap1(self, ml_cal):
-        cal = (float(ml_cal) / f.last_pour)
-        self.cursor.execute('''REPLACE INTO beers1 (calibration) Values (?)'''(cal,))
+    def calibrations_tap1(self):
+        cal = (float(self.ml_cal1) / f.last_pour)
+        self.cursor.execute('''REPLACE INTO beers1 (calibration) Values (?)'''[cal])
         self.db.commit()
         return "Success! Calibration is", cal, "ml per click!"
 
-    def calibrations_tap2(self, ml_cal):
-        cal = (float(ml_cal) / f.last_pour)
-        self.cursor.execute('''REPLACE INTO beers2 (calibration) Values (?)'''(cal,))
+    def calibrations_tap2(self):
+        cal = (float(self.ml_cal2) / f.last_pour)
+        self.cursor.execute('''REPLACE INTO beers2 (calibration) Values (?)'''[cal])
         self.db.commit()
         return "Success! Calibration is", cal, "ml per click!"
 

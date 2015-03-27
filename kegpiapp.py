@@ -58,6 +58,8 @@ def dashboard():
     db.beers_init()
     #Tap 1
     beer_name1 = db.beer_name1()
+    #IBU
+    #Beer Description
     last1 = db.last_beer_tap1_id()
     last_oz1 = db.last_beer_tap1_oz()
     last_ml1 = db.last_beer_tap1_ml()
@@ -123,6 +125,7 @@ class TapAdmin1(Form):
     og1 = StringField('Original Gravity')
     fg1 = StringField('Final Gravity')
     submit1 = SubmitField('Submit')
+    #Should add beer_desc, ibu, glass_size, and keg_size ie corny, sixth, pony, half etc.
 
 class TapAdmin2(Form):
     beer_name2 = StringField('Beer Name')
@@ -156,16 +159,40 @@ def admin():
             admin.fg2_post()
         if admin.beer_name2 != '':
             admin.beer_name2_post()
+    if request.method == 'GET':
+        form1.beer_name1.data = db.beer_name1()
+        form1.og1.data = db.og1()
+        form1.fg1.data = db.fg1()
+        form2.beer_name2.data = db.beer_name2()
+        form2.og2.data = db.og2()
+        form2.fg2.data = db.fg2()
     return render_template('/admin.html',form1=form1, form2=form2)
 
 @app.route('/update', methods=['POST'])
+@requires_auth
 def admin_update():
     return redirect('/admin')
-    
+
+@app.route('/kick1',methods=['GET', 'POST'])
+@requires_auth
+def kick1():
+    return redirect('/admin')
+
+@app.route('/kick2',methods=['GET', 'POST'])    
+@requires_auth
+def kick2():
+    return redirect('/admin')
+
+class CalibrateForm(Form):
+    enter_ml = StringField('Enter Ml')
 
 @app.route('/calibrate', methods=['GET', 'POST'])
+@requires_auth
 def calibrate_page():
-    return "Place holder for calibration."
+    form = CalibrateForm()
+    ml_data = form.enter_ml.data
+    form.enter_ml.data = ''
+    return render_template('/calibrate.html', form=form)
 
 @app.errorhandler(404)
 def not_found(error):
