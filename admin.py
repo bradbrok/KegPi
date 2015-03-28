@@ -30,25 +30,53 @@ class AdminActions(object):
         self.fg1 = 0
         self.beer_name1 = ''
         self.ml_cal1 = 2.25
+        self.bdesc1 = ''
+        self.ibu2 = 0
 
         self.og2 = 0
         self.fg2 = 0
         self.beer_name2 = ''
         self.ml_cal2 = 2.25
+        self.bdesc2 = ''
+        self.ibu2 = 0
 
 
     def close(self):
         self.db.close()
 
+    def desc1(self):
+        desc = self.bdesc1
+        self.cursor.execute('''UPDATE beers1 set beer_desc=? where id=1''',[desc])
+        self.db.commit()
+        return "Success!"
+
+    def desc2(self):
+        desc = self.bdesc2
+        self.cursor.execute('''UPDATE beers2 set beer_desc=? where id=1''',[desc])
+        self.db.commit()
+        return "Success!"
+
+    def ibu_1(self):
+        ibu = int(self.ibu1)
+        self.cursor.execute('''UPDATE beers1 set ibu=? where id=1''',[ibu])
+        self.db.commit()
+        return "Success!"
+
+    def ibu_2(self):
+        ibu = int(self.ibu2)
+        self.cursor.execute('''UPDATE beers2 set ibu=? where id=1''',[ibu])
+        self.db.commit()
+        return "Success!"
+
     def calibrations_tap1(self):
         cal = (float(self.ml_cal1) / f.last_pour)
-        self.cursor.execute('''REPLACE INTO beers1 (calibration) Values (?)'''[cal])
+        self.cursor.execute('''REPLACE INTO beers1 (calibration) Values (?)''',[cal])
         self.db.commit()
         return "Success! Calibration is", cal, "ml per click!"
 
     def calibrations_tap2(self):
         cal = (float(self.ml_cal2) / f.last_pour)
-        self.cursor.execute('''REPLACE INTO beers2 (calibration) Values (?)'''[cal])
+        self.cursor.execute('''REPLACE INTO beers2 (calibration) Values (?)''',[cal])
         self.db.commit()
         return "Success! Calibration is", cal, "ml per click!"
 
@@ -87,6 +115,7 @@ class AdminActions(object):
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS kegs1(id INTEGER PRIMARY KEY, beer_name TEXT, date_kicked TEXT)''')
         self.cursor.execute('''INSERT INTO kegs1(beer_name, date_kicked) VALUES (?,?)''', (bevdb.beer_name1, time.ctime()))
         self.cursor.execute('''DROP TABLE beers1''')
+        self.db.commit()
         self.cursor.execute('''INSERT INTO beers1(beer_name, og, fg, calibration) VALUES (?,?,?,?)''', ("Beer", 0, 0, 2.25))
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap1(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
             clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC, pour_count INTEGER)''')

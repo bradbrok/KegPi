@@ -4,9 +4,11 @@
     <div class="tap1">
     <h3>Left Tap</h3>
     <h3>{{ beer_name1 }}</h3>
+    {{ desc1 }}
       <ul class="stats1">
         <li>OG: {{og1}} / FG: {{fg1}}</li>
         <li>ABV: {{abv1}}%</li>
+        <li>IBU: {{ibu1}}</li>
         <li>Keg Volume: {{ pints1_left }} Pints remaining</li>
         <li>Number of beers drank so far : {{ last1 }}</li>
         </ul>
@@ -25,9 +27,11 @@
     <div class="tap2">
     <h3>Right Tap</h3>
     <h3>{{ beer_name2 }}</h3>
+    {{ desc2 }}
       <ul class="stats2">
         <li>OG: {{og2}} / FG: {{fg2}} </li>
         <li>ABV: {{abv2}}%</li>
+        <li>IBU: {{ibu2}}</li>
         <li>Keg Volume: {{ pints2_left }} Pints remaining</li>
         <li>Number of beers drank so far : {{ last2 }}</li>
       </ul>

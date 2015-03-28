@@ -2,7 +2,7 @@
 
 {% block content %}
 <header>
-ADMIN CONTROLS ALL YOUR BASE ARE BELONG TO US!
+<h2>Admin</h2>
 </header>
 <div class="tap1">
 <h3>Left Tap:</h3>
@@ -10,8 +10,12 @@ ADMIN CONTROLS ALL YOUR BASE ARE BELONG TO US!
     <form method="post" action="#">
     {{ form1.hidden_tag() }}
     {{ form1.beer_name1 }}
-    Beer Name
-    <br>
+    Beer Name<br>
+    <form method="post" action="#">
+    {{ form1.hidden_tag() }}
+    {{ form1.desc1 }}
+    Beer Description<br>
+    <form method="post" action="#">
     {{ form1.hidden_tag() }}
     {{ form1.og1 }}
     OG<br>
@@ -19,6 +23,10 @@ ADMIN CONTROLS ALL YOUR BASE ARE BELONG TO US!
     {{ form1.hidden_tag() }}
     {{ form1.fg1 }}
     FG<br>
+    <form method="post" action="#">
+    {{ form1.hidden_tag() }}
+    {{ form1.ibu1 }}
+    IBU<br>
     <input type="submit" value="Submit"/>
 </form>
 
@@ -33,8 +41,12 @@ ADMIN CONTROLS ALL YOUR BASE ARE BELONG TO US!
     <form method="post" action="#">
     {{ form2.hidden_tag() }}
     {{ form2.beer_name2 }}
-    Beer Name
-    <br>
+    Beer Name<br>
+    <form method="post" action="#">
+    {{ form2.hidden_tag() }}
+    {{ form2.desc2 }}
+    Description<br>
+    <form method="post" action="#">
     {{ form2.hidden_tag() }}
     {{ form2.og2 }}
     OG<br>
@@ -42,6 +54,9 @@ ADMIN CONTROLS ALL YOUR BASE ARE BELONG TO US!
     {{ form2.hidden_tag() }}
     {{ form2.fg2 }}
     FG<br>
+    {{ form2.hidden_tag() }}
+    {{ form2.ibu2 }}
+    IBU<br>
     <input type="submit" value="Submit"/>
 </form>
 

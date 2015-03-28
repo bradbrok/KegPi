@@ -59,8 +59,7 @@ def dashboard():
     db.beers_init()
     #Tap 1
     beer_name1 = db.beer_name1()
-    #IBU
-    #Beer Description
+    desc1 = db.beer_desc1()
     last1 = db.last_beer_tap1_id()
     last_oz1 = db.last_beer_tap1_oz()
     last_ml1 = db.last_beer_tap1_ml()
@@ -72,10 +71,12 @@ def dashboard():
     fifth1 = db.fifth_beer1()
     og1 = db.og1()
     fg1 = db.fg1()
+    ibu1 = db.ibu1()
     abv1 = gravity_calc(og1, fg1)
     calories1 = calorie_calc(og1, fg1, last_ml1)
     #Tap2
     beer_name2 = db.beer_name2()
+    desc2 = db.beer_desc2()
     last2 = db.last_beer_tap2_id()
     last_oz2 = db.last_beer_tap2_oz()
     last_ml2 = db.last_beer_tap2_ml()
@@ -87,11 +88,13 @@ def dashboard():
     fifth2 = db.fifth_beer2()
     og2 = db.og2()
     fg2 = db.fg2()
+    ibu2 = db.ibu2()
     abv2 = gravity_calc(og2, fg2)
     calories2 = calorie_calc(og2, fg2, last_ml2)
     return render_template('index.html',
         #Tap1
         beer_name1 = beer_name1,
+        desc1 = desc1,
         last1 = last1,
         last_oz1 = last_oz1,
         last_ml1 = last_ml1,
@@ -99,6 +102,7 @@ def dashboard():
         pints1_left = pints1_left,
         og1 = og1,
         fg1 = fg1,
+        ibu1 = ibu1,
         abv1 = abv1,
         calories1 = calories1,
         second1 = second1,
@@ -107,6 +111,7 @@ def dashboard():
         fifth1 = fifth1,
         #Tap2
         beer_name2 = beer_name2,
+        desc2 = desc2,
         last2 = last2,
         last_oz2 = last_oz2,
         last_ml2 = last_ml2,
@@ -119,19 +124,24 @@ def dashboard():
         fifth2 = fifth2,
         og2 = og2,
         fg2 = fg2,
+        ibu2 = ibu2,
         abv2 = abv2)
 #Forms
 class TapAdmin1(Form):
     beer_name1 = StringField('Beer Name')
+    desc1 = StringField('Description')
     og1 = StringField('Original Gravity')
     fg1 = StringField('Final Gravity')
+    ibu1 = StringField('IBU')
     submit1 = SubmitField('Submit')
     #Should add beer_desc, ibu, glass_size, and keg_size ie corny, sixth, pony, half etc.
 
 class TapAdmin2(Form):
     beer_name2 = StringField('Beer Name')
+    desc2 = StringField('Description')
     og2 = StringField('Original Gravity')
     fg2 = StringField('Final Gravity')
+    ibu2 = StringField('IBU')
     submit2 = SubmitField('Submit')
 
 @app.route('/admin', methods=['GET', 'POST'])
@@ -143,10 +153,16 @@ def admin():
         admin.beer_name1 = form1.beer_name1.data
         admin.og1 = form1.og1.data
         admin.fg1 = form1.fg1.data
+        admin.bdesc1 = form1.desc1.data
+        admin.ibu1 = form1.ibu1.data
         if admin.og1 != '' and admin.og1 > 1:
             admin.og1_post()
         if admin.fg1 != '' and admin.fg1 > 1:
             admin.fg1_post()
+        if admin.ibu1 != '' and admin.ibu1 >= 0:
+            admin.ibu_1()
+        if admin.bdesc1 != '':
+            admin.desc1()
         if admin.beer_name1 != '':
             admin.beer_name1_post()
     form2 = TapAdmin2()
@@ -154,19 +170,29 @@ def admin():
         admin.beer_name2 = form2.beer_name2.data
         admin.og2 = form2.og2.data
         admin.fg2 = form2.fg2.data
+        admin.bdesc2 = form2.desc2.data
+        admin.ibu2 = form2.ibu2.data
         if admin.og2 != '' and admin.og2 > 1:
             admin.og2_post()
         if admin.fg2 != '' and admin.fg2 > 1:
             admin.fg2_post()
+        if admin.ibu2 != '' and admin.ibu1 >= 0:
+            admin.ibu_2()
+        if admin.bdesc2 != '':
+            admin.desc2()
         if admin.beer_name2 != '':
             admin.beer_name2_post()
     if request.method == 'GET':
         form1.beer_name1.data = db.beer_name1()
         form1.og1.data = db.og1()
         form1.fg1.data = db.fg1()
+        form1.ibu1.data = db.ibu1()
+        form1.desc1.data = db.beer_desc1()
         form2.beer_name2.data = db.beer_name2()
         form2.og2.data = db.og2()
         form2.fg2.data = db.fg2()
+        form2.ibu2.data = db.ibu2()
+        form2.desc2.data = db.beer_desc2()
     return render_template('/admin.html',form1=form1, form2=form2)
 
 @app.route('/update', methods=['POST'])
