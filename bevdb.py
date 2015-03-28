@@ -11,19 +11,26 @@ class BevDataBase(object):
         self.cursor = self.db.cursor()
 
     def beers_init(self):
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap1(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
+            clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC, pour_count INTEGER)''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap2(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
+            clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC, pour_count INTEGER)''')
+        self.db.commit()
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS beers1(id INTEGER PRIMARY KEY, beer_name TEXT, 
-            og Numeric, fg Numeric, calibration Numeric, beer_desc TEXT, ibu Numeric, glass_type TEXT)''')
+            og Numeric, fg Numeric, calibration Numeric, beer_desc TEXT, ibu Numeric, glass_type TEXT, keg_size Numeric)''')
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS beers2(id INTEGER PRIMARY KEY, beer_name TEXT, 
-            og Numeric, fg Numeric, calibration Numeric, beer_desc TEXT, ibu Numeric, glass_type TEXT)''')
+            og Numeric, fg Numeric, calibration Numeric, beer_desc TEXT, ibu Numeric, glass_type TEXT, keg_size Numeric)''')
+        self.db.commit()
         self.cursor.execute('''SELECT beer_name from beers1 where id=1''')
         idx = self.cursor.fetchone()
         if idx == None:
-            self.cursor.execute('''INSERT INTO beers1(beer_name, og, fg, calibration, beer_desc, ibu, glass_type) 
-                VALUES (?,?,?,?,?,?,?)''', 
-                ("Beer", 0, 0, 2.25, "Delicious!", 0, "Pint Glass"))
-            self.cursor.execute('''INSERT INTO beers2(beer_name, og, fg, calibration,beer_desc, ibu, glass_type)
-                VALUES (?,?,?,?,?,?,?)''', 
-                ("Beer", 0, 0, 2.25, "Delicious!", 0, "Pint Glass"))
+            self.cursor.execute('''INSERT INTO beers1(beer_name, og, fg, calibration, beer_desc, ibu, glass_type, keg_size) 
+                VALUES (?,?,?,?,?,?,?,?)''', 
+                ("Beer", 1, 1, 2.25, "Delicious!", 0, "Pint Glass", "corny"))
+            self.cursor.execute('''INSERT INTO beers2(beer_name, og, fg, calibration, beer_desc, ibu, glass_type, keg_size)
+                VALUES (?,?,?,?,?,?,?,?)''', 
+                ("Beer", 1, 1, 2.25, "Delicious!", 0, "Pint Glass", "corny"))
+            self.db.commit()
         else:
             pass
 
@@ -31,6 +38,56 @@ class BevDataBase(object):
         self.db.close()
     
     #Show details of just the last beer on tap 1 & 2 accordingly.
+    def beer_desc1(self):
+        self.cursor.execute('''SELECT beer_desc from beers1 where id=1''')
+        desc = self.cursor.fetchone()[0]
+        if desc != None:
+            return desc
+        else:
+            return "Type a description!"
+
+    def ibu1(self):
+        self.cursor.execute('''SELECT ibu from beers1 where id=1''')
+        ibu = self.cursor.fetchone()[0]
+        if ibu != None:
+            return ibu
+        else:
+            return 0
+
+
+    def glass1(self):
+        self.cursor.execute('''SELECT glass_type from beers1 where id=1''')
+        glass = self.cursor.fetchone()[0]
+        if glass != None:
+            return glass
+        else:
+            return "Pint Glass"
+
+    def beer_desc2(self):
+        self.cursor.execute('''SELECT beer_desc from beers2 where id=1''')
+        desc = self.cursor.fetchone()[0]
+        if desc != None:
+            return desc
+        else:
+            return "Type a description!"
+
+
+    def ibu2(self):
+        self.cursor.execute('''SELECT ibu from beers2 where id=1''')
+        ibu = self.cursor.fetchone()[0]
+        if ibu != None:
+            return ibu
+        else:
+            return 0
+
+    def glass2(self):
+        self.cursor.execute('''SELECT glass_type from beers2 where id=1''')
+        glass = self.cursor.fetchone()[0]
+        if glass != None:
+            return glass
+        else:
+            return "Pint Glass"
+
     def last_beer_tap1_id(self):
         self.cursor.execute('''SELECT max(id) from bevs_tap1''')
         last_id = self.cursor.fetchone()[0]

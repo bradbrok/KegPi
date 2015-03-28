@@ -17,6 +17,7 @@ WTF_CSRF_ENABLED = False
 #Class calls
 #admin = AdminActions()
 db = BevDataBase()
+db.beers_init()
 #Misc functions
 def check_auth(username, password):
     #lol, need to hash these in the db.
@@ -49,7 +50,7 @@ def calorie_calc(og, fg, ml):
     abv = ((og - fg) / 0.75 * 100)
     abw = ((0.79 * abv) / fg)
     rex = (0.1808 * pog) + (0.8192 * pfg)
-    calories = ((6.9 * abv) + 4 * (rex - 0.1)) * fg * (ml /100)
+    calories = ((6.9 * abw) + 4 * (rex - 0.1)) * fg * (ml /100)
     return round(calories, 1)
 
 # Main page and dashboard.
