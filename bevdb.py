@@ -26,10 +26,10 @@ class BevDataBase(object):
         if idx == None:
             self.cursor.execute('''INSERT INTO beers1(beer_name, og, fg, calibration, beer_desc, ibu, glass_type, keg_size) 
                 VALUES (?,?,?,?,?,?,?,?)''', 
-                ("Beer", 1, 1, 2.25, "Delicious!", 0, "Pint Glass", "corny"))
+                ("Beer", 1, 1, 2.25, "Delicious!", 0, "Pint Glass", 640))
             self.cursor.execute('''INSERT INTO beers2(beer_name, og, fg, calibration, beer_desc, ibu, glass_type, keg_size)
                 VALUES (?,?,?,?,?,?,?,?)''', 
-                ("Beer", 1, 1, 2.25, "Delicious!", 0, "Pint Glass", "corny"))
+                ("Beer", 1, 1, 2.25, "Delicious!", 0, "Pint Glass", 640))
             self.db.commit()
         else:
             pass
@@ -38,6 +38,16 @@ class BevDataBase(object):
         self.db.close()
     
     #Show details of just the last beer on tap 1 & 2 accordingly.
+    def keg_size1(self):
+        self.cursor.execute('''SELECT keg_size from beers1 where id=1''')
+        keg = self.cursor.fetchone()[0]
+        return keg
+
+    def keg_size2(self):
+        self.cursor.execute('''SELECT keg_size from beers2 where id=1''')
+        keg = self.cursor.fetchone()[0]
+        return keg
+
     def beer_desc1(self):
         self.cursor.execute('''SELECT beer_desc from beers1 where id=1''')
         desc = self.cursor.fetchone()[0]
@@ -53,7 +63,6 @@ class BevDataBase(object):
             return ibu
         else:
             return 0
-
 
     def glass1(self):
         self.cursor.execute('''SELECT glass_type from beers1 where id=1''')
@@ -294,24 +303,24 @@ class BevDataBase(object):
     #Keg volumes initialzied from Kegs class.
     #Add all volumes in ml together and find the percentage left.
     def keg_volume1_pints(self):
-        starting_vol = 640.0 #5 gallons in oz, we should init from Keg class, but not now.
+        starting_vol = self.keg_size1() #5 gallons in oz, we should init from Keg class, but not now.
         self.cursor.execute('''SELECT sum(oz_pour) from bevs_tap1''')
         vol1 = self.cursor.fetchone()[0]
         if vol1 != None:
             remaining_vol1 = starting_vol - vol1
-            return round((remaining_vol1 / 16),1)
+            return round((remaining_vol1),1)
         else:
-            return "No"
+            return self.keg_size1()
 
     def keg_volume2_pints(self):
-        starting_vol = 640.0 #5 gallons in oz
+        starting_vol = self.keg_size2() #5 gallons in oz
         self.cursor.execute('''SELECT sum(oz_pour) from bevs_tap2''')
         vol2 = self.cursor.fetchone()[0]
         if vol2 != None:
             remaining_vol2 = starting_vol - vol2
-            return round((remaining_vol2 / 16),1)
+            return round((remaining_vol2),1)
         else:
-            return "No"
+            return self.keg_size2()
 
     def beer_name1(self):
         self.cursor.execute('''SELECT beer_name from beers1 where id=1''')

@@ -7,7 +7,6 @@ from wtforms.validators import Required
 from bevdb import *
 from admin import * #This is going to post our calibration, fg, og, and beer names too!
 import sqlite3
-import ConfigParser
 from functools import wraps
 #Configs
 app = Flask(__name__)
@@ -45,6 +44,7 @@ def gravity_calc(og, fg):
 def calorie_calc(og, fg, ml):
     #These are a bit complicated, basically convert og and fg to plato or sg, then find the abw
     #basically calculates by weight of carbs and alcohol. Carbs = 4cal/gram, alcohol = 7cal/gram
+    #Calories are an approximation. Of course, not verified by the FDA or anything.
     pog = (-1 * 616.868) + (1111.14 * og) - (630.272 * (og ** 2)) + (135.997 * (og ** 3)) 
     pfg = (-1 * 616.868) + (1111.14 * fg) - (630.272 * (fg ** 2)) + (135.997 * (fg ** 3))
     abv = ((og - fg) / 0.75 * 100)
@@ -52,6 +52,10 @@ def calorie_calc(og, fg, ml):
     rex = (0.1808 * pog) + (0.8192 * pfg)
     calories = ((6.9 * abw) + 4 * (rex - 0.1)) * fg * (ml /100)
     return round(calories, 1)
+
+def keg_pct(poured, kegsize):
+    x = poured / kegsize
+    return x * 100
 
 # Main page and dashboard.
 @app.route('/', methods=['GET', 'POST'])
@@ -64,7 +68,7 @@ def dashboard():
     last_oz1 = db.last_beer_tap1_oz()
     last_ml1 = db.last_beer_tap1_ml()
     time1 = db.last_beer_tap1_time()
-    pints1_left = db.keg_volume1_pints()
+    pints1_left = db.keg_volume1_pints() / 16
     second1 = db.second_beer1()
     third1 = db.third_beer1()
     fourth1 = db.fourth_beer1()
@@ -74,6 +78,7 @@ def dashboard():
     ibu1 = db.ibu1()
     abv1 = gravity_calc(og1, fg1)
     calories1 = calorie_calc(og1, fg1, last_ml1)
+    pct1 = keg_pct(db.keg_volume1_pints(), db.keg_size1())
     #Tap2
     beer_name2 = db.beer_name2()
     desc2 = db.beer_desc2()
@@ -81,7 +86,7 @@ def dashboard():
     last_oz2 = db.last_beer_tap2_oz()
     last_ml2 = db.last_beer_tap2_ml()
     time2 = db.last_beer_tap2_time()
-    pints2_left = db.keg_volume2_pints()
+    pints2_left = db.keg_volume2_pints() / 16
     second2 = db.second_beer2()
     third2 = db.third_beer2()
     fourth2 = db.fourth_beer2()
@@ -91,6 +96,7 @@ def dashboard():
     ibu2 = db.ibu2()
     abv2 = gravity_calc(og2, fg2)
     calories2 = calorie_calc(og2, fg2, last_ml2)
+    pct2 = keg_pct(db.keg_volume2_pints(), db.keg_size2())
     return render_template('index.html',
         #Tap1
         beer_name1 = beer_name1,
@@ -109,6 +115,7 @@ def dashboard():
         third1 = third1,
         fourth1 = fourth1,
         fifth1 = fifth1,
+        pct1 = pct1,
         #Tap2
         beer_name2 = beer_name2,
         desc2 = desc2,
@@ -125,7 +132,8 @@ def dashboard():
         og2 = og2,
         fg2 = fg2,
         ibu2 = ibu2,
-        abv2 = abv2)
+        abv2 = abv2,
+        pct2 = pct2)
 #Forms
 class TapAdmin1(Form):
     beer_name1 = StringField('Beer Name')
@@ -218,8 +226,11 @@ class CalibrateForm(Form):
 def calibrate_page():
     form = CalibrateForm()
     ml_data = form.enter_ml.data
-    form.enter_ml.data = ''
     return render_template('/calibrate.html', form=form)
+
+@app.route('/kegs',methods=['GET'])
+def kegs():
+    return render_template('/kegs.html')
 
 @app.errorhandler(404)
 def not_found(error):

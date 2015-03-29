@@ -1,4 +1,4 @@
-"""
+r"""
 KegPi
 
 The tastiest solution to monitor your keggerator.
@@ -24,6 +24,9 @@ class AdminActions(object):
         #Constants
         self.corny_keg_start_ml = 18927.05 #ml
         self.corny_keg_start_oz = 640.0 #oz
+        self.sixth_oz = 661
+        self.quarter_oz = 992
+        self.half_bbl = 1984
 
         #Store these to be called
         self.og1 = 0
@@ -115,19 +118,32 @@ class AdminActions(object):
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS kegs1(id INTEGER PRIMARY KEY, beer_name TEXT, date_kicked TEXT)''')
         self.cursor.execute('''INSERT INTO kegs1(beer_name, date_kicked) VALUES (?,?)''', (bevdb.beer_name1, time.ctime()))
         self.cursor.execute('''DROP TABLE beers1''')
+        self.cursor.execute('''DROP TABLE bevs_tap1''')
         self.db.commit()
-        self.cursor.execute('''INSERT INTO beers1(beer_name, og, fg, calibration) VALUES (?,?,?,?)''', ("Beer", 0, 0, 2.25))
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap1(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
             clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC, pour_count INTEGER)''')
+        self.db.commit()
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS beers1(id INTEGER PRIMARY KEY, beer_name TEXT, 
+            og Numeric, fg Numeric, calibration Numeric, beer_desc TEXT, ibu Numeric, glass_type TEXT, keg_size Numeric)''')
+        self.cursor.execute('''INSERT INTO beers1(beer_name, og, fg, calibration, beer_desc, ibu, glass_type, keg_size) 
+                VALUES (?,?,?,?,?,?,?,?)''', 
+                ("Beer", 1, 1, 2.25, "Delicious!", 0, "Pint Glass", 640))
         self.db.commit()
         return "Success!"
 
     def kick_keg2(self):
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS kegs2(id INTEGER PRIMARY KEY, beer_name TEXT, date_kicked TEXT)''')
-        self.cursor.execute('''INSERT INTO kegs2(beer_name, date_kicked) VALUES (?,?)''', (bevdb.beer_name1, time.ctime()))
+        self.cursor.execute('''INSERT INTO kegs2(beer_name, date_kicked) VALUES (?,?)''', (bevdb.beer_name2, time.ctime()))
         self.cursor.execute('''DROP TABLE beers2''')
-        self.cursor.execute('''INSERT INTO beers2(beer_name, og, fg, calibration) VALUES (?,?,?,?)''', ("Beer", 0, 0, 2.25))
-        self.cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap1(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
+        self.cursor.execute('''DROP TABLE bevs_tap2''')
+        self.db.commit()
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap2(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
             clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC, pour_count INTEGER)''')
+        self.db.commit()
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS beers2(id INTEGER PRIMARY KEY, beer_name TEXT, 
+            og Numeric, fg Numeric, calibration Numeric, beer_desc TEXT, ibu Numeric, glass_type TEXT, keg_size Numeric)''')
+        self.cursor.execute('''INSERT INTO beers2(beer_name, og, fg, calibration, beer_desc, ibu, glass_type, keg_size) 
+                VALUES (?,?,?,?,?,?,?,?)''', 
+                ("Beer", 1, 1, 2.25, "Delicious!", 0, "Pint Glass", 640))
         self.db.commit()
         return "Success!"
