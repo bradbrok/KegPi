@@ -1,25 +1,64 @@
+#header{
+	text-align: center;
+}
+
+.container{
+	background-color: #3f4040;
+	position: relative;
+	float: top;
+	height: 80px;
+	font-family: "Lucida Console", Monaco, monospace;
+}
+
 .tap1 {
-	float:left; width:50%
+	display: flex;
+	float:left; width:45%;
+	background-color: #f6f6f6;
+	padding-right: 2%;
+	padding-left: 2%;
+	min-height: 80%;
+}
+
+.pour1{
+	background-color: #c4c4c4;
 }
 
 .tap2 {
-	float:right; width:50%
+	float:right; width:45%;
+	background-color: #f6f6f6;
+	padding-left: 2%;
+	padding-right: 2%;
+	min-height: 80%;
+}
+
+.pour2{
+	background-color: #c4c4c4;
 }
 
 .footer {
+	position: absolute; 
+	bottom: 0;
+	font-family: "Lucida Console", Monaco, monospace;
+}
 
+a:link {
+	color:#c4c4c4;
+}
+a:visited {
+	color:#c4c4c4;
 }
 
 h1 {
-	font-family: sans-serif;
-	font-size: 27px;
+	font-family: "Lucida Console", Monaco, monospace;
+	font-size: 42px;
 	font-weight: 900;
-	color: #2e3641;
+	color: #000000;
 	margin: 0 0 10px 0;
+	text-align: center;
 }
 h2 {
-	font-family: sans-serif;
-	font-size: 24px;
+	font-family: "Lucida Console", Monaco, monospace;
+	font-size: 22px;
 	color: #ffffff;
 	margin: 0;
 	padding: 15px 0 0 20px;

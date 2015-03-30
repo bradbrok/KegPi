@@ -12,9 +12,9 @@ class BevDataBase(object):
 
     def beers_init(self):
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap1(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
-            clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC, pour_count INTEGER)''')
+            clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC)''')
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap2(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
-            clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC, pour_count INTEGER)''')
+            clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC)''')
         self.db.commit()
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS beers1(id INTEGER PRIMARY KEY, beer_name TEXT, 
             og Numeric, fg Numeric, calibration Numeric, beer_desc TEXT, ibu Numeric, glass_type TEXT, keg_size Numeric)''')
@@ -132,7 +132,7 @@ class BevDataBase(object):
                 time1 = "Today"
             return time1
         else:
-            return 0
+            return "No pours recorded"
 
     def last_beer_tap2_id(self):
         self.cursor.execute('''SELECT max(id) from bevs_tap2''')
@@ -182,8 +182,8 @@ class BevDataBase(object):
             ml = lix[0]
             oz = lix[1]
             dt = lix[2]
-            #if dt == time.strftime('%m/%d/%y'):
-            #    dt = "Today"
+            if dt == time.strftime('%m/%d/%y'):
+                dt = "Today"
             return "%s oz / %d ml - %s" % (round(oz,1), ml, dt)
         else:
             return "None"
@@ -198,8 +198,8 @@ class BevDataBase(object):
             ml = lix[0]
             oz = lix[1]
             dt = lix[2]
-            #if dt == time.strftime('%m/%d/%y'):
-            #    dt = "Today"
+            if dt == time.strftime('%m/%d/%y'):
+                dt = "Today"
             return "%s oz / %d ml - %s" % (round(oz,1), ml, dt)
         else:
             return "None"
@@ -214,8 +214,8 @@ class BevDataBase(object):
             ml = lix[0]
             oz = lix[1]
             dt = lix[2]
-            #if dt == time.strftime('%m/%d/%y'):
-            #    dt = "Today"
+            if dt == time.strftime('%m/%d/%y'):
+                dt = "Today"
             return "%s oz / %d ml - %s" % (round(oz,1), ml, dt)
         else:
             return "None"
@@ -230,8 +230,8 @@ class BevDataBase(object):
             ml = lix[0]
             oz = lix[1]
             dt = lix[2]
-            #if dt == time.strftime('%m/%d/%y'):
-            #    dt = "Today"
+            if dt == time.strftime('%m/%d/%y'):
+                dt = "Today"
             return "%s oz / %d ml - %s" % (round(oz,1), ml, dt)
         else:
             return "None"

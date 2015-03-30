@@ -9,13 +9,13 @@
         <li>OG: {{og1}} / FG: {{fg1}}</li>
         <li>ABV: {{abv1}}%</li>
         <li>IBU: {{ibu1}}</li>
-        <li>Keg Volume: {{ pints1_left }} Pints remaining</li>
-        <li>Number of beers drank so far : {{ last1 }}</li>
+        <li>Drinks: {{ last1 }}</li>
         </ul>
             <div class="keg_health">Keg Health
+            <div class="remaining"> {{ pints1_left }} Pints remaining</div>
             <div class="pct">{{pct1}} %</div>
             </div>
-        <ul>
+      <ul class="pour1">
         <h3>Last Pour</h3>
         <li>{{ last_oz1 }} oz / {{ last_ml1 }} ml</li>
         <li>Calories : {{ calories1 }}</li>
@@ -41,7 +41,7 @@
           <div class="keg_health">Keg Health
           <div class="pct">{{pct2}} %</div>
           </div>
-      <ul>
+      <ul class="pour2">
         <h3>Last Pour</h3>
         <li>{{ last_oz2 }} oz / {{ last_ml2 }} ml</li>
         <li>Calories : {{ calories2 }}</li>

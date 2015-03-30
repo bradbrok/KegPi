@@ -44,14 +44,17 @@ def gravity_calc(og, fg):
 def calorie_calc(og, fg, ml):
     #These are a bit complicated, basically convert og and fg to plato or sg, then find the abw
     #basically calculates by weight of carbs and alcohol. Carbs = 4cal/gram, alcohol = 7cal/gram
-    #Calories are an approximation. Of course, not verified by the FDA or anything.
+    #Calories are an approximation. Of course, not verified by the FDA or anything. So take it as a suggestion.
     pog = (-1 * 616.868) + (1111.14 * og) - (630.272 * (og ** 2)) + (135.997 * (og ** 3)) 
     pfg = (-1 * 616.868) + (1111.14 * fg) - (630.272 * (fg ** 2)) + (135.997 * (fg ** 3))
     abv = ((og - fg) / 0.75 * 100)
     abw = ((0.79 * abv) / fg)
     rex = (0.1808 * pog) + (0.8192 * pfg)
     calories = ((6.9 * abw) + 4 * (rex - 0.1)) * fg * (ml /100)
-    return round(calories, 1)
+    if calories > 0:
+        return round(calories, 1)
+    else:
+        return 0
 
 def keg_pct(poured, kegsize):
     x = poured / kegsize
@@ -211,11 +214,15 @@ def admin_update():
 @app.route('/kick1',methods=['GET', 'POST'])
 @requires_auth
 def kick1():
+    admin = AdminActions()
+    admin.kick_keg1()
     return redirect('/admin')
 
 @app.route('/kick2',methods=['GET', 'POST'])    
 @requires_auth
 def kick2():
+    admin = AdminActions()
+    admin.kick_keg1()
     return redirect('/admin')
 
 class CalibrateForm(Form):
@@ -238,3 +245,5 @@ def not_found(error):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
+    #tap1.run()
+    #tap2.run()
