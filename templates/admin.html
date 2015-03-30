@@ -30,12 +30,16 @@
     <input type="submit" value="Submit"/>
 </form>
 
+<div class="danger">
 <h3>Danger Zone!!</h3>
 	<form action="/kick1" method="post">
 		<input type="submit" value="Kick the keg?"></input>
 	</form><br>
-    <a href="/calibrate1">Calibrate This Tap</a>
+    Current Calibration: {{cal1}} ml per click. <br>
+    <div class="cal"><a href="/calibrate1">Calibrate This Tap</a></div>
 </div>
+</div>
+
 <div class="tap2">
 <h3>Right Tap:</h3>
 <form method="post" action="#">
@@ -61,12 +65,14 @@
     IBU<br>
     <input type="submit" value="Submit"/>
 </form>
-
+<div class="danger">
 <h3>Danger Zone!!</h3>
 	<form action="/kick2" method="post">
 		<input type="submit" value="Kick the keg?"></input>
 	</form><br>
-    <a href="/calibrate2">Calibrate This Tap</a>
+    Current Calibration: {{cal2}} ml per click. <br>
+    <div class="cal"><a href="/calibrate2">Calibrate This Tap</a></div>
+</div>
 </div>
 
 {% endblock %}

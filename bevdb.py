@@ -361,3 +361,16 @@ class BevDataBase(object):
         self.cursor.execute('''SELECT calibration from beers2 where id=1''')
         cal = self.cursor.fetchone()[0]
         return cal
+
+    def last_clicks1(self):
+        idx = self.last_beer_tap1_id()
+        self.cursor.execute('''SELECT clicks from bevs_tap1 where id=?''',[idx])
+        clicks = self.cursor.fetchone()[0]
+        return clicks
+
+    def last_clicks2(self):
+        idx = self.last_beer_tap2_id()
+        self.cursor.execute('''SELECT clicks from bevs_tap2 where id=?''',[idx])
+        clicks = self.cursor.fetchone()[0]
+        return clicks
+

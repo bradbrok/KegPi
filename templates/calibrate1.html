@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="cal">
-Current calibration : {{current_calibration1}}
+Current calibration : {{current_calibration1}} ml per click.
 <br>
 Wait 30 seconds, and measure the last pour in ml. Then input the total volume of the last pour:<br>
 <form method="post" action="#">
@@ -10,5 +10,4 @@ Wait 30 seconds, and measure the last pour in ml. Then input the total volume of
     <input type="submit" value="Submit"/>
 </form>
 </div>
-
 {% endblock %}

@@ -11,6 +11,11 @@
 	font-family: "Lucida Console", Monaco, monospace;
 }
 
+.keg{
+	height: 84px;
+	background-size: 84px 84px;
+}
+
 .tap1 {
 	display: flex;
 	float:left; width:45%;
@@ -38,6 +43,14 @@
 
 .cal {
 	background-color: #c4c4c4;
+}
+
+.danger {
+	background-color: #dbd840;
+}
+
+.cal {
+	background-color: #3f4040;
 }
 
 .footer {

@@ -71,7 +71,7 @@ def dashboard():
     last_oz1 = db.last_beer_tap1_oz()
     last_ml1 = db.last_beer_tap1_ml()
     time1 = db.last_beer_tap1_time()
-    pints1_left = db.keg_volume1_pints() / 16
+    pints1_left = round((db.keg_volume1_pints() / 16), 1)
     second1 = db.second_beer1()
     third1 = db.third_beer1()
     fourth1 = db.fourth_beer1()
@@ -80,8 +80,8 @@ def dashboard():
     fg1 = db.fg1()
     ibu1 = db.ibu1()
     abv1 = gravity_calc(og1, fg1)
-    calories1 = calorie_calc(og1, fg1, last_ml1)
-    pct1 = keg_pct(db.keg_volume1_pints(), db.keg_size1())
+    calories1 = int(calorie_calc(og1, fg1, last_ml1))
+    pct1 = int(keg_pct(db.keg_volume1_pints(), db.keg_size1()))
     #Tap2
     beer_name2 = db.beer_name2()
     desc2 = db.beer_desc2()
@@ -98,8 +98,8 @@ def dashboard():
     fg2 = db.fg2()
     ibu2 = db.ibu2()
     abv2 = gravity_calc(og2, fg2)
-    calories2 = calorie_calc(og2, fg2, last_ml2)
-    pct2 = keg_pct(db.keg_volume2_pints(), db.keg_size2())
+    calories2 = int(calorie_calc(og2, fg2, last_ml2))
+    pct2 = int(keg_pct(db.keg_volume2_pints(), db.keg_size2()))
     return render_template('index.html',
         #Tap1
         beer_name1 = beer_name1,
@@ -160,6 +160,8 @@ class TapAdmin2(Form):
 def admin():
     admin = AdminActions()
     form1 = TapAdmin1()
+    cal1 = round(db.calibration1(),3)
+    cal2 = round(db.calibration2(),3)
     if form1.validate_on_submit():
         admin.beer_name1 = form1.beer_name1.data
         admin.og1 = form1.og1.data
@@ -204,21 +206,21 @@ def admin():
         form2.fg2.data = db.fg2()
         form2.ibu2.data = db.ibu2()
         form2.desc2.data = db.beer_desc2()
-    return render_template('/admin.html',form1=form1, form2=form2)
+    return render_template('/admin.html',form1=form1, form2=form2, cal1=cal1, cal2=cal2)
 
 @app.route('/update', methods=['POST'])
 @requires_auth
 def admin_update():
     return redirect('/admin')
 
-@app.route('/kick1',methods=['GET', 'POST'])
+@app.route('/kick1',methods=['POST'])
 @requires_auth
 def kick1():
     admin = AdminActions()
     admin.kick_keg1()
     return redirect('/admin')
 
-@app.route('/kick2',methods=['GET', 'POST'])    
+@app.route('/kick2',methods=['POST'])    
 @requires_auth
 def kick2():
     admin = AdminActions()
@@ -233,7 +235,7 @@ class CalibrateForm(Form):
 def calibrate_page1():
     admin = AdminActions()
     form = CalibrateForm()
-    current_calibration = db.calibration2
+    current_calibration1 = db.calibration1()
     if form.validate_on_submit():
         ml_data = form.enter_ml.data
         form.enter_ml.data = ''
@@ -243,14 +245,14 @@ def calibrate_page1():
     if db.last_beer_tap1_id() == 0:
         return redirect('404.html')
     else:
-        return render_template('/calibrate1.html', form=form, current_calibration=current_calibration)
+        return render_template('/calibrate1.html', form=form, current_calibration1=current_calibration1)
 
 @app.route('/calibrate2', methods=['GET', 'POST'])
 @requires_auth
 def calibrate_page2():
     admin = AdminActions()
     form = CalibrateForm()
-    current_calibration = db.calibration2
+    current_calibration2 = db.calibration2()
     if form.validate_on_submit():
         ml_data = form.enter_ml.data
         form.enter_ml.data = ''
@@ -260,7 +262,7 @@ def calibrate_page2():
     if db.last_beer_tap2_id() == 0:
         return redirect('404.html')
     else:
-        return render_template('/calibrate2.html', form=form, current_calibration=current_calibration)
+        return render_template('/calibrate2.html', form=form, current_calibration2=current_calibration2)
 
 @app.route('/kegs',methods=['GET'])
 def kegs():

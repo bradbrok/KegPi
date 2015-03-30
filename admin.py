@@ -72,16 +72,18 @@ class AdminActions(object):
         return "Success!"
 
     def calibrations_tap1(self):
-        cal = (int(self.ml_cal1) / f.last_pour)
-        self.cursor.execute('''REPLACE INTO beers1 (calibration) Values (?)''',[cal])
+        cal = (float(self.ml_cal1)/ bevdb.last_clicks1())
+        print cal
+        self.cursor.execute('''UPDATE beers1 set calibration=? where id=1''',[cal])
         self.db.commit()
-        return "Success! Calibration is", cal, "ml per click!"
+        print "Success! Calibration is", cal, "ml per click!"
 
     def calibrations_tap2(self):
-        cal = (int(self.ml_cal2) / f.last_pour)
-        self.cursor.execute('''REPLACE INTO beers2 (calibration) Values (?)''',[cal])
+        cal = (float(self.ml_cal2) / bevdb.last_clicks2())
+        print cal
+        self.cursor.execute('''UPDATE beers2 set calibration=? where id=1''',[cal])
         self.db.commit()
-        return "Success! Calibration is", cal, "ml per click!"
+        print "Success! Calibration is", cal, "ml per click!"
 
     def beer_name1_post(self):
         self.cursor.execute('''UPDATE beers1 set beer_name=? where id=1''',[self.beer_name1])
