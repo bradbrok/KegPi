@@ -72,13 +72,13 @@ class AdminActions(object):
         return "Success!"
 
     def calibrations_tap1(self):
-        cal = (float(self.ml_cal1) / f.last_pour)
+        cal = (int(self.ml_cal1) / f.last_pour)
         self.cursor.execute('''REPLACE INTO beers1 (calibration) Values (?)''',[cal])
         self.db.commit()
         return "Success! Calibration is", cal, "ml per click!"
 
     def calibrations_tap2(self):
-        cal = (float(self.ml_cal2) / f.last_pour)
+        cal = (int(self.ml_cal2) / f.last_pour)
         self.cursor.execute('''REPLACE INTO beers2 (calibration) Values (?)''',[cal])
         self.db.commit()
         return "Success! Calibration is", cal, "ml per click!"
@@ -120,9 +120,8 @@ class AdminActions(object):
         self.cursor.execute('''DROP TABLE bevs_tap1''')
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap1(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
             clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC)''')
-        self.cursor.execute('''UPDATE beers1 set (beer_name, og, fg, beer_desc, ibu, glass_type, keg_size) 
-                VALUES (?,?,?,?,?,?,?) where id=1''',
-                ("Beer", 1, 1, "Delicious!", 0, "Pint Glass", 640))
+        self.cursor.execute('''UPDATE beers1 SET beer_name=?, og=?, fg=?, beer_desc=?, ibu=?, glass_type=?, keg_size=? 
+                where id=1''',("Beer", 1, 1, "Delicious!", 0, "Pint Glass", 640))
         self.db.commit()
         return "Success!"
 
@@ -134,8 +133,7 @@ class AdminActions(object):
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap2(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
             clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC)''')
         self.db.commit()
-        self.cursor.execute('''UPDATE beers2 set (beer_name, og, fg, beer_desc, ibu, glass_type, keg_size) 
-                VALUES (?,?,?,?,?,?,?) where id=1''',
-                ("Beer", 1, 1, "Delicious!", 0, "Pint Glass", 640,))
+        self.cursor.execute('''UPDATE beers2 SET beer_name=?, og=?, fg=?, beer_desc=?, ibu=?, glass_type=?, keg_size=? 
+                where id=1''',("Beer", 1, 1, "Delicious!", 0, "Pint Glass", 640,))
         self.db.commit()
         return "Success!"

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='kegpicss.css') }}">
+<link type=script href="{{ url_for('static', filename='jquery.js') }}">
   <head>
     <title>KegPi</title> 
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
@@ -19,6 +20,7 @@
     </div>
     <div class="footer">
       <a href="/admin">Admin</a>
+      <a href="/kegs">Kegs</a>
       <br>
       Powered by <a href="https://github.com/bradbrok/KegPi">KegPi</a>
     </div>   

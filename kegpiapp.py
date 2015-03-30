@@ -228,12 +228,39 @@ def kick2():
 class CalibrateForm(Form):
     enter_ml = StringField('Enter Ml')
 
-@app.route('/calibrate', methods=['GET', 'POST'])
 @requires_auth
-def calibrate_page():
+@app.route('/calibrate1', methods=['GET', 'POST'])
+def calibrate_page1():
+    admin = AdminActions()
     form = CalibrateForm()
-    ml_data = form.enter_ml.data
-    return render_template('/calibrate.html', form=form)
+    current_calibration = db.calibration2
+    if form.validate_on_submit():
+        ml_data = form.enter_ml.data
+        form.enter_ml.data = ''
+        admin.ml_cal1 = ml_data
+        admin.calibrations_tap1()
+        return redirect('/admin')
+    if db.last_beer_tap1_id() == 0:
+        return redirect('404.html')
+    else:
+        return render_template('/calibrate1.html', form=form, current_calibration=current_calibration)
+
+@app.route('/calibrate2', methods=['GET', 'POST'])
+@requires_auth
+def calibrate_page2():
+    admin = AdminActions()
+    form = CalibrateForm()
+    current_calibration = db.calibration2
+    if form.validate_on_submit():
+        ml_data = form.enter_ml.data
+        form.enter_ml.data = ''
+        admin.ml_cal2 = ml_data
+        admin.calibrations_tap1()
+        return redirect('/admin')
+    if db.last_beer_tap2_id() == 0:
+        return redirect('404.html')
+    else:
+        return render_template('/calibrate2.html', form=form, current_calibration=current_calibration)
 
 @app.route('/kegs',methods=['GET'])
 def kegs():
@@ -246,4 +273,4 @@ def not_found(error):
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
     #tap1.run()
-    #tap2.run()
+    #tap2.run() #These will soon run the background tasks for the individual taps.
