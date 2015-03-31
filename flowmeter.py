@@ -34,6 +34,7 @@ class FlowMeter(object):
     #Initialize all_the_things.jpg!!!
     def __init__(self):
         self.click_count = 0
+        self.click_control = 0
         self.last_click_time = 0
         self.this_pour = 0
         self.last_pour = 0
@@ -51,6 +52,7 @@ class FlowMeter(object):
         self.last_pour_time = 0
         self.pour_event_occured = False
         self.last_clicks = 0
+        self.hertz = 0
 
 
 
@@ -72,10 +74,15 @@ class FlowMeter(object):
             return self.calibration
 
     #GPIO detects the rising edge, and updates the current count.
-    #Find the time of the last click.
+    #Find the time of the last click. This will calculate Hertz.
+    #The unfortunate thing is it ignores the first click to make sure the Hz control works.
     def update(self):
-        self.click_count = self.click_count + 1
-        self.last_click_time = time.time()
+        self.click_control = max(((time.time()* 1000.0) - self.last_click_time), 1)
+        self.hertz = (1000 / self.click_control)
+        print self.hertz
+        if (self.hertz > 4 and self.hertz < 100):
+            self.click_count = self.click_count + 1
+        self.last_click_time = int(time.time() * 1000.0)
         print self.click_count, "Last Click at", self.last_click_time
 
     #If no clicks are found in the last 20 seconds, record the clicks as a last pour.

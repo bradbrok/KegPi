@@ -32,12 +32,16 @@ a:visited{
 	float:left;
 	width: 48%;
 	margin-right:1.5em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
 
 }
 .tap2{
 	background: #c4c4c4;
 	width:48%;
 	float:left;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
 }
 .ea_tap {
 	background: #3f4040;

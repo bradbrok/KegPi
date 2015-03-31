@@ -6,8 +6,6 @@ import ConfigParser
 
 f = FlowMeter()
 
-config = ConfigParser.ConfigParser()
-config.read("tap_config.ini")
 
 rand_flow = randint(142, 200)
 f = FlowMeter()
@@ -19,7 +17,6 @@ while True:
 		time.sleep(.01)
 		f.update()
 	else:
-		f.calibration = float(config.get('taps', 'calibration_1'))
 		print "stopped"
 		time.sleep(10)
 		f.last_pour_func()
