@@ -171,6 +171,24 @@ class BevDataBase(object):
         else:
             return "No pours recorded"
 
+    def last_time1(self):
+        if self.last_beer_tap1_id() != 0:
+            idx = self.last_beer_tap1_id()
+            self.cursor.execute('''SELECT time_pour from bevs_tap1 where id = ?''', (idx,))
+            time1 = self.cursor.fetchone()[0]
+            return time1
+        else:
+            return "No pours recorded"
+
+    def last_time2(self):
+        if self.last_beer_tap2_id() != 0:
+            idx = self.last_beer_tap2_id()
+            self.cursor.execute('''SELECT time_pour from bevs_tap2 where id = ?''', (idx,))
+            time2 = self.cursor.fetchone()[0]
+            return time2
+        else:
+            return "No pours recorded"
+
     #Show basic details of just the last 5 beers. Pass this as dict.
     def second_beer1(self):
         if self.last_beer_tap1_id() > 1:
@@ -262,8 +280,8 @@ class BevDataBase(object):
             ml = lix[0]
             oz = lix[1]
             dt = lix[2]
-            #if dt == time.strftime('%m/%d/%y'):
-            #    dt = "Today"
+            if dt == time.strftime('%m/%d/%y'):
+                dt = "Today"
             return "%s oz / %d ml - %s" % (round(oz,1), ml, dt)
         else:
             return "None"
@@ -294,8 +312,8 @@ class BevDataBase(object):
             ml = lix[0]
             oz = lix[1]
             dt = lix[2]
-            #if dt == time.strftime('%m/%d/%y'):
-            #    dt = "Today"
+            if dt == time.strftime('%m/%d/%y'):
+                dt = "Today"
             return "%s oz / %d ml - %s" % (round(oz,1), ml, dt)
         else:
             return "None"
@@ -303,7 +321,7 @@ class BevDataBase(object):
     #Keg volumes initialzied from Kegs class.
     #Add all volumes in ml together and find the percentage left.
     def keg_volume1_pints(self):
-        starting_vol = self.keg_size1() #5 gallons in oz, we should init from Keg class, but not now.
+        starting_vol = self.keg_size1()
         self.cursor.execute('''SELECT sum(oz_pour) from bevs_tap1''')
         vol1 = self.cursor.fetchone()[0]
         if vol1 != None:
@@ -313,7 +331,7 @@ class BevDataBase(object):
             return self.keg_size1()
 
     def keg_volume2_pints(self):
-        starting_vol = self.keg_size2() #5 gallons in oz
+        starting_vol = self.keg_size2()
         self.cursor.execute('''SELECT sum(oz_pour) from bevs_tap2''')
         vol2 = self.cursor.fetchone()[0]
         if vol2 != None:

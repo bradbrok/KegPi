@@ -71,6 +71,7 @@ def dashboard():
     last_oz1 = db.last_beer_tap1_oz()
     last_ml1 = db.last_beer_tap1_ml()
     time1 = db.last_beer_tap1_time()
+    pourtime1 = db.last_time1()
     pints1_left = round((db.keg_volume1_pints() / 16), 1)
     second1 = db.second_beer1()
     third1 = db.third_beer1()
@@ -89,6 +90,7 @@ def dashboard():
     last_oz2 = db.last_beer_tap2_oz()
     last_ml2 = db.last_beer_tap2_ml()
     time2 = db.last_beer_tap2_time()
+    pourtime2 = db.last_time2()
     pints2_left = round((db.keg_volume2_pints() / 16),1)
     second2 = db.second_beer2()
     third2 = db.third_beer2()
@@ -108,6 +110,7 @@ def dashboard():
         last_oz1 = last_oz1,
         last_ml1 = last_ml1,
         time1 = time1,
+        pourtime1=pourtime1,
         pints1_left = pints1_left,
         og1 = og1,
         fg1 = fg1,
@@ -126,6 +129,7 @@ def dashboard():
         last_oz2 = last_oz2,
         last_ml2 = last_ml2,
         time2 = time2,
+        pourtime2=pourtime2,
         pints2_left = pints2_left,
         calories2 = calories2,
         second2 = second2,
