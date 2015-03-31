@@ -30,7 +30,6 @@ class FlowMeter(object):
     pour_event_occured = False
     last_clicks = 0
 
-
     #Initialize all_the_things.jpg!!!
     def __init__(self):
         self.click_count = 0
@@ -54,8 +53,7 @@ class FlowMeter(object):
         self.last_clicks = 0
         self.hertz = 0
 
-
-
+    #This doesn't get called anymore, currently defunct.
     #User will input the calibration
     #Approximately this should be between 2 and 2.5 ml per click for most sensors.
     def calibrate(self, cal_input):
@@ -79,7 +77,6 @@ class FlowMeter(object):
     def update(self):
         self.click_control = max(((time.time()* 1000.0) - self.last_click_time), 1)
         self.hertz = (1000 / self.click_control)
-        print self.hertz
         if (self.hertz > 4 and self.hertz < 100):
             self.click_count = self.click_count + 1
         self.last_click_time = int(time.time() * 1000.0)
