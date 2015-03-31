@@ -89,7 +89,7 @@ def dashboard():
     last_oz2 = db.last_beer_tap2_oz()
     last_ml2 = db.last_beer_tap2_ml()
     time2 = db.last_beer_tap2_time()
-    pints2_left = db.keg_volume2_pints() / 16
+    pints2_left = round((db.keg_volume2_pints() / 16),1)
     second2 = db.second_beer2()
     third2 = db.third_beer2()
     fourth2 = db.fourth_beer2()
@@ -257,7 +257,7 @@ def calibrate_page2():
         ml_data = form.enter_ml.data
         form.enter_ml.data = ''
         admin.ml_cal2 = ml_data
-        admin.calibrations_tap1()
+        admin.calibrations_tap2()
         return redirect('/admin')
     if db.last_beer_tap2_id() == 0:
         return redirect('404.html')

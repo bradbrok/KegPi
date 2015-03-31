@@ -81,3 +81,9 @@ h2 {
 	margin: 0;
 	padding: 15px 0 0 20px;
 }
+
+h3 {
+	font-family: "Lucida Console", Monaco, monospace;
+	background-color: #3f4040;
+	color: white;
+}
