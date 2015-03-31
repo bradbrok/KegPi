@@ -22,7 +22,6 @@ class FlowMeter(object):
     drink_count = 0
     time_now = 0
     calibration = 0
-    oz_per_click = 0.08454
     ml_in_a_pint = 473.176
     ml_in_an_oz = 29.5735
     to_ml = 0
@@ -43,7 +42,6 @@ class FlowMeter(object):
         self.enabled = True
         self.calibration = 0 #2.25
         self.cal_input = 0
-        self.oz_per_click = 0.08454
         self.ml_in_a_pint = 473.176
         self.ml_in_an_oz = 29.5735
         self.to_ml = 0
