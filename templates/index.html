@@ -1,20 +1,5 @@
-<!DOCTYPE html>
-<html>
-
-  <head>
-    <title>KegPi</title> 
-    <link rel="stylesheet" href="../static/kegpicss.css">
-    <link rel="stylesheet" href="../static/normalize.css">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-  </head>
-  <body>
-
-      <header>
-        <div class="container">
-          <h1>KegPi</h1>
-          </div>
-      </header> 
-  <!--{% block content %}-->
+  {% extends "layout.html" %}
+  {% block content %}
     <div class="taps container">
 
       <div class="tap1">
@@ -30,7 +15,7 @@
                     <div class="keg_img"></div>
                     <div class="remaining"> {{ pints1_left }} Pints remaining</div>
                     <div class="pct">{{pct1}} %</div>
-                </div>
+                </div><br>
                 <div class="stats1">
                   <ul>
                     <li>OG: {{og1}} / FG: {{fg1}}</li>
@@ -47,7 +32,7 @@
               <h3>Last Pour</h3>
               <li>{{ last_oz1 }} oz / {{ last_ml1 }} ml</li>
               <li>Calories : {{ calories1 }}</li>
-              <li>Time : {{ time1 }}</li>
+              <li>Time : {{ time1 }} @ {{ pourtime1 }}</li>
             </ul>
              <h4>Previous Pours</h4>
             <ul class="prev_pours">
@@ -56,7 +41,7 @@
               <li>{{ fourth1 }}</li>
               <li>{{ fifth1 }}</li>
             </ul>
-            </div>
+          </div>
       </div><!-- /.tap1 -->
 
       
@@ -72,8 +57,8 @@
                   <div class="keg_img"></div>
                   <div class="remaining"> {{ pints2_left }} Pints remaining</div>
                   <div class="pct">{{pct2}} %</div>
-              </div>
-              <div class="stats2">
+              </div><br>
+            <div class="stats2">
               <ul>
                 <li>OG: {{og2}} / FG: {{fg2}} </li>
                 <li>ABV: {{abv2}}%</li>
@@ -88,7 +73,7 @@
               <h3>Last Pour</h3>
               <li>{{ last_oz2 }} oz / {{ last_ml2 }} ml</li>
               <li>Calories : {{ calories2 }}</li>
-              <li>Time : {{ time2 }}</li>
+              <li>Time : {{ time2 }} @ {{ pourtime2 }}</li>
             </ul>
             <h4>Previous Pours</h4>
             <ul class="prev_pours">
@@ -100,15 +85,4 @@
           </div>
       </div> <!-- /.tap2 -->
     </div><!-- /.container -->
-  <!--{% endblock %}-->
-      </div>
-
-    <div class="footer">
-      <a href="/admin">Admin</a>
-      <a href="/kegs">Kegs</a>
-      <br>
-      Powered by <a href="https://github.com/bradbrok/KegPi">KegPi</a>
-    </div>   
-  </body>
-
-</html>
+  {% endblock %}

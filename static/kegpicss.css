@@ -18,7 +18,14 @@ h1{
 	vertical-align: vertical;
 	padding:5% 0;
 	color:#c4c4c4;
+	font-size: 42px;
 
+}
+a{
+	color:white;
+}
+a:visited{
+	color: white;
 }
 .tap1{
 	background: #885B24;

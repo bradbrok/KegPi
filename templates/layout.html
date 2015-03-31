@@ -14,62 +14,10 @@
     </header> 
      
     <div class="container">
-     {% block content %}
-  <div class="taps">
-    <div class="tap1">
-    <h3>Left Tap</h3>
-    <h3>{{ beer_name1 }}</h3>
-    {{ desc1 }}
-      <ul class="stats1">
-        <li>OG: {{og1}} / FG: {{fg1}}</li>
-        <li>ABV: {{abv1}}%</li>
-        <li>IBU: {{ibu1}}</li>
-        <li>Drinks: {{ last1 }}</li>
-        </ul>
-            <div class="keg_health">Keg Health
-            <div class="remaining"> {{ pints1_left }} Pints remaining</div>
-            <div class="pct">{{pct1}} %</div>
-            </div>
-      <ul class="pour1">
-        <h3>Last Pour</h3>
-        <li>{{ last_oz1 }} oz / {{ last_ml1 }} ml</li>
-        <li>Calories : {{ calories1 }}</li>
-        <li>Time : {{ time1 }}</li>
-      </ul>
-      Previous Pours<br>
-      {{ second1 }} <br>
-      {{ third1 }} <br>
-      {{ fourth1 }} <br>
-      {{ fifth1 }} <br>
-    </div>
-    <div class="tap2">
-    <h3>Right Tap</h3>
-    <h3>{{ beer_name2 }}</h3>
-    {{ desc2 }}
-      <ul class="stats2">
-        <li>OG: {{og2}} / FG: {{fg2}} </li>
-        <li>ABV: {{abv2}}%</li>
-        <li>IBU: {{ibu2}}</li>
-        <li>Drinks: {{ last2 }}</li>
-      </ul>
-          <div class="keg_health">Keg Health
-          <div class="remaining">{{ pints2_left }} Pints remaining</div>
-          <div class="pct">{{pct2}} %</div>
-          </div>
-      <ul class="pour2">
-        <h3>Last Pour</h3>
-        <li>{{ last_oz2 }} oz / {{ last_ml2 }} ml</li>
-        <li>Calories : {{ calories2 }}</li>
-        <li>Time : {{ time2 }}</li>
-      </ul>
-      Previous Pours<br>
-      {{ second2 }} <br>
-      {{ third2 }} <br>
-      {{ fourth2 }} <br>
-      {{ fifth2 }} <br>
-    </div>
-  </div>
-{% endblock %}
+    {% block content %}
+
+
+    {% endblock %}
     </div>
     <div class="footer">
       <a href="/admin">Admin</a>
