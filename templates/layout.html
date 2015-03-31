@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="../static/kegpicss.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='kegpicss.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='normalize.css') }}">
   <head>
     <title>KegPi</title> 
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
