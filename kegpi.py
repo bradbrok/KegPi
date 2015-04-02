@@ -58,14 +58,12 @@ taps = TapSet()
 def to_pi_tap1(channel):
     taps.set_tap(1)
     f.update()
-    if (f.click_count > 1)
-        f.calibration = bevdb.calibration1() #Don't set the tap unless flow rate is high enough to trigger.
+    f.calibration = bevdb.calibration1() #Don't set the tap unless flow rate is high enough to trigger.
 
 def to_pi_tap2(channel):
     taps.set_tap(2)
     f.update()
-    if (f.click_count > 1):
-        f.calibration = bevdb.calibration2()
+    f.calibration = bevdb.calibration2()
 
 
 #Add the event detection to trigger callback.

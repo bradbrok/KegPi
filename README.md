@@ -7,7 +7,7 @@ Dependencies:
 
 This is just a simple solution for a two tap system for the meantime.
 
-Right now there isn't an easy installer for this just yet. So, in order to make this work on your pi, navigate to the KegPi directory and type:
+Right now there isn't an easy installer for this just yet. So, in order to make this work on your pi, navigate to the KegPi directory and run or create a script:
 
 sudo python kegpi.py & sudo python kegpiapp.py
 

@@ -117,25 +117,25 @@ class AdminActions(object):
 
     #Drop the tables for the keg, store totals only in db. Then reinitialize kegs.
     def kick_keg1(self):
-        self.cursor.execute('''CREATE TABLE IF NOT EXISTS kegs1(id INTEGER PRIMARY KEY, beer_name TEXT, date_kicked TEXT)''')
-        self.cursor.execute('''INSERT INTO kegs1(beer_name, date_kicked) VALUES (?,?)''', (bevdb.beer_name1(), time.ctime()))
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS kegs(id INTEGER PRIMARY KEY, beer_name TEXT, date_kicked TEXT)''')
+        self.cursor.execute('''INSERT INTO kegs(beer_name, date_kicked) VALUES (?,?)''', (bevdb.beer_name1(), time.ctime()))
         self.cursor.execute('''DROP TABLE bevs_tap1''')
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap1(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
             clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC)''')
-        self.cursor.execute('''UPDATE beers1 SET beer_name=?, og=?, fg=?, beer_desc=?, ibu=?, glass_type=?, keg_size=? 
-                where id=1''',("Beer", 1, 1, "Delicious!", 0, "Pint Glass", 640))
+        self.cursor.execute('''UPDATE beers1 SET beer_name=?, og=?, fg=?, beer_desc=?, ibu=?, glass_type=?, keg_size=?, keg_start_volume=? 
+                where id=1''',("Beer", 1, 1, "Delicious!", 0, "Pint Glass", 640, 0))
         self.db.commit()
         return "Success!"
 
     def kick_keg2(self):
-        self.cursor.execute('''CREATE TABLE IF NOT EXISTS kegs2(id INTEGER PRIMARY KEY, beer_name TEXT, date_kicked TEXT)''')
-        self.cursor.execute('''UPDATE kegs2(beer_name, date_kicked) VALUES (?,?)''', (bevdb.beer_name2(), time.ctime()))
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS kegs(id INTEGER PRIMARY KEY, beer_name TEXT, date_kicked TEXT)''')
+        self.cursor.execute('''UPDATE kegs(beer_name, date_kicked) VALUES (?,?)''', (bevdb.beer_name2(), time.ctime()))
         self.cursor.execute('''DROP TABLE bevs_tap2''')
         self.db.commit()
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap2(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
             clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC)''')
         self.db.commit()
-        self.cursor.execute('''UPDATE beers2 SET beer_name=?, og=?, fg=?, beer_desc=?, ibu=?, glass_type=?, keg_size=? 
-                where id=1''',("Beer", 1, 1, "Delicious!", 0, "Pint Glass", 640,))
+        self.cursor.execute('''UPDATE beers2 SET beer_name=?, og=?, fg=?, beer_desc=?, ibu=?, glass_type=?, keg_size=?, keg_start_volume=? 
+                where id=1''',("Beer", 1, 1, "Delicious!", 0, "Pint Glass", 640, 0))
         self.db.commit()
         return "Success!"

@@ -17,19 +17,23 @@ class BevDataBase(object):
             clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC)''')
         self.db.commit()
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS beers1(id INTEGER PRIMARY KEY, beer_name TEXT, 
-            og Numeric, fg Numeric, calibration Numeric, beer_desc TEXT, ibu Numeric, glass_type TEXT, keg_size Numeric)''')
+            og Numeric, fg Numeric, calibration Numeric, beer_desc TEXT, ibu Numeric, glass_type TEXT, 
+            keg_size Numeric, keg_start_volume Numeric)''')
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS beers2(id INTEGER PRIMARY KEY, beer_name TEXT, 
-            og Numeric, fg Numeric, calibration Numeric, beer_desc TEXT, ibu Numeric, glass_type TEXT, keg_size Numeric)''')
+            og Numeric, fg Numeric, calibration Numeric, beer_desc TEXT, ibu Numeric, glass_type TEXT, 
+            keg_size Numeric, keg_start_volume Numeric)''')
         self.db.commit()
         self.cursor.execute('''SELECT beer_name from beers1 where id=1''')
         idx = self.cursor.fetchone()
         if idx == None:
-            self.cursor.execute('''INSERT INTO beers1(beer_name, og, fg, calibration, beer_desc, ibu, glass_type, keg_size) 
-                VALUES (?,?,?,?,?,?,?,?)''', 
-                ("Beer", 1, 1, 2.25, "Delicious!", 0, "Pint Glass", 640))
-            self.cursor.execute('''INSERT INTO beers2(beer_name, og, fg, calibration, beer_desc, ibu, glass_type, keg_size)
-                VALUES (?,?,?,?,?,?,?,?)''', 
-                ("Beer", 1, 1, 2.25, "Delicious!", 0, "Pint Glass", 640))
+            self.cursor.execute('''INSERT INTO beers1(beer_name, og, fg, calibration, beer_desc, ibu, glass_type, 
+                keg_size, keg_start_volume) 
+                VALUES (?,?,?,?,?,?,?,?,?)''', 
+                ("Beer", 1, 1, 2.25, "Delicious!", 0, "Pint Glass", 640, 0))
+            self.cursor.execute('''INSERT INTO beers2(beer_name, og, fg, calibration, beer_desc, ibu, glass_type, 
+                keg_size, keg_start_volume)
+                VALUES (?,?,?,?,?,?,?,?,?)''', 
+                ("Beer", 1, 1, 2.25, "Delicious!", 0, "Pint Glass", 640, 0))
             self.db.commit()
         else:
             pass
@@ -38,6 +42,32 @@ class BevDataBase(object):
         self.db.close()
     
     #Show details of just the last beer on tap 1 & 2 accordingly.
+    def keg_loop(self):
+        keg_list = []
+        self.cursor.execute('''SELECT max(id) from kegs''')
+        last_id = self.cursor.fetchone()[0]
+        if last_id != None:
+            for last_id in (1,last_id):
+                self.cursor.execute('''SELECT beer_name from kegs where id=?''', [last_id])
+                name = self.cursor.fetchone()[0]
+                self.cursor.execute('''SELECT date_kicked from kegs where id=?''', [last_id])
+                kicked = self.cursor.fetchone()[0]
+                keg_list.append((name,kicked))
+                print keg_list
+                return keg_list
+        else:
+            return 0
+
+    def keg_starting_vol1(self):
+        self.cursor.execute('''SELECT keg_start_volume from beers1 where id=1''')
+        start_vol = self.cursor.fetchone()[0]
+        return start_vol
+
+    def keg_starting_vol2(self):
+        self.cursor.execute('''SELECT keg_start_volume from beers2 where id=1''')
+        start_vol = self.cursor.fetchone()[0]
+        return start_vol
+
     def keg_size1(self):
         self.cursor.execute('''SELECT keg_size from beers1 where id=1''')
         keg = self.cursor.fetchone()[0]

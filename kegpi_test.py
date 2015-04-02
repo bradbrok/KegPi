@@ -14,10 +14,10 @@ clicks = 0
 while True:
 	if (clicks < rand_flow):
 		clicks = clicks + 1
-		time.sleep(.01)
+		time.sleep(.34)
 		f.update()
 	else:
 		print "stopped"
-		time.sleep(10)
+		time.sleep(15)
 		f.last_pour_func()
 		break

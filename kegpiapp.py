@@ -51,7 +51,7 @@ def calorie_calc(og, fg, ml):
     abw = ((0.79 * abv) / fg)
     rex = (0.1808 * pog) + (0.8192 * pfg)
     calories = ((6.9 * abw) + 4 * (rex - 0.1)) * fg * (ml /100)
-    if calories > 0:
+    if calories > 0: #If there's a beer with negative calories, let me know, I could use it.
         return round(calories, 1)
     else:
         return 0
@@ -270,6 +270,7 @@ def calibrate_page2():
 
 @app.route('/kegs',methods=['GET'])
 def kegs():
+    kegs = db.keg_loop()
     return render_template('/kegs.html')
 
 @app.errorhandler(404)
@@ -278,5 +279,3 @@ def not_found(error):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
-    #tap1.run()
-    #tap2.run() #These will soon run the background tasks for the individual taps.

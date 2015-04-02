@@ -12,22 +12,6 @@ import ConfigParser
 class FlowMeter(object):
  
     version = 'v0.1'
-    enabled = True
-    click_count = 0
-    last_click_time = 0
-    this_pour = 0
-    last_pour = 0
-    last_pour_time = 0
-    total_pour = 0
-    drink_count = 0
-    time_now = 0
-    calibration = 0
-    ml_in_a_pint = 473.176
-    ml_in_an_oz = 29.5735
-    to_ml = 0
-    last_pour_time = 0
-    pour_event_occured = False
-    last_clicks = 0
 
     #Initialize all_the_things.jpg!!!
     def __init__(self):
@@ -75,7 +59,7 @@ class FlowMeter(object):
     def update(self):
         self.click_control = max(((time.time()* 1000.0) - self.last_click_time), 1)
         self.hertz = (1000 / self.click_control)
-        if (self.hertz > 4 and self.hertz < 100):
+        if (self.hertz > 3 and self.hertz < 100):
             self.click_count = self.click_count + 1
         self.last_click_time = int(time.time() * 1000.0)
         print self.click_count, "Last Click at", self.last_click_time
