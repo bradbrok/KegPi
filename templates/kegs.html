@@ -2,7 +2,11 @@
 
 {% block content %}
 This will soon have all of the previous kegs that were on tap. A for loop will cycle through the last kegs that were on tap, and the date that they were kicked.
-
-{{kegs}}
-
+<ul>
+{% for x in kegs %}
+<li>
+{{x}}
+</li>
+{% endfor %}
+</ul>
 {% endblock %}

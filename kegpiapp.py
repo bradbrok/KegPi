@@ -271,7 +271,7 @@ def calibrate_page2():
 @app.route('/kegs',methods=['GET'])
 def kegs():
     kegs = db.keg_loop()
-    return render_template('/kegs.html')
+    return render_template('/kegs.html', kegs=kegs)
 
 @app.errorhandler(404)
 def not_found(error):

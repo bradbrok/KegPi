@@ -1,10 +1,9 @@
-r"""
+"""
 KegPi
 
 The tastiest solution to monitor your keggerator.
 
-The Keg class will help us update our keg volumes and tap numbers associated with
-each and every keg.
+The admin class is the destructive database model. 
 """
 from flowmeter import *
 from bevdb import *
