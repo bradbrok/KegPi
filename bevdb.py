@@ -23,6 +23,7 @@ class BevDataBase(object):
             og Numeric, fg Numeric, calibration Numeric, beer_desc TEXT, ibu Numeric, glass_type TEXT, 
             keg_size Numeric, keg_start_volume Numeric)''')
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS kegs(id INTEGER PRIMARY KEY, beer_name TEXT, date_kicked TEXT)''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS user(username TEXT, password TEXT)''')
         self.db.commit()
         self.cursor.execute('''SELECT beer_name from beers1 where id=1''')
         idx = self.cursor.fetchone()
@@ -56,7 +57,7 @@ class BevDataBase(object):
                 kicked = self.cursor.fetchone()[0]
                 kicked_kegs = "%s kicked on %s" % (name, kicked)
                 keg_list.append(kicked_kegs)
-            return keg_list
+            return keg_list[::-1] #Puts the string in a list, then reverse the list!
         else:
             return 0
 

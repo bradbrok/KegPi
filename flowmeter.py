@@ -86,7 +86,7 @@ class FlowMeter(object):
     def update_all(self):
         self.last_pour_in_ml()
         self.last_pour_in_oz()
-        #self.store_total_clicks() - memory leak?
+        #self.store_total_clicks() don't really need this.
         self.last_click_time = time.time()
         self.pour_event_occured = True #Use this to update our database lazily.
         self.count_drinks()

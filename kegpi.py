@@ -19,11 +19,6 @@ bevdb = BevDataBase()
 #This will soon update when I get around to using this app.
 beers_drank_while_coding_this = "14"
 
-#The ini settings to load calibration constants from.
-config = ConfigParser.ConfigParser()
-config.read("tap_config.ini")
-
-#Let's move this to a db.db_create_all function of some sort, right now nothing is initialized if there is no db.
 #Database config.
 db = sqlite3.connect('beverage_db', check_same_thread=False)
 cursor = db.cursor()

@@ -117,7 +117,7 @@ class AdminActions(object):
     #Drop the tables for the keg, store totals only in db. Then reinitialize kegs.
     def kick_keg1(self):
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS kegs(id INTEGER PRIMARY KEY, beer_name TEXT, date_kicked TEXT)''')
-        self.cursor.execute('''INSERT INTO kegs(beer_name, date_kicked) VALUES (?,?)''', (bevdb.beer_name1(), time.ctime()))
+        self.cursor.execute('''INSERT INTO kegs(beer_name, date_kicked) VALUES (?,?)''', (bevdb.beer_name1(), time.strftime("%x")))
         self.cursor.execute('''DROP TABLE bevs_tap1''')
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap1(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
             clicks INTEGER, ml_pour NUMERIC, oz_pour NUMERIC)''')
@@ -128,7 +128,7 @@ class AdminActions(object):
 
     def kick_keg2(self):
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS kegs(id INTEGER PRIMARY KEY, beer_name TEXT, date_kicked TEXT)''')
-        self.cursor.execute('''UPDATE kegs(beer_name, date_kicked) VALUES (?,?)''', (bevdb.beer_name2(), time.ctime()))
+        self.cursor.execute('''INSERT INTO kegs(beer_name, date_kicked) VALUES (?,?)''', (bevdb.beer_name2(), time.strftime("%x")))
         self.cursor.execute('''DROP TABLE bevs_tap2''')
         self.db.commit()
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS bevs_tap2(id INTEGER PRIMARY KEY, time_pour TEXT, date_pour TEXT,
