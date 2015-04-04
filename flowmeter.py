@@ -63,6 +63,7 @@ class FlowMeter(object):
             self.click_count = self.click_count + 1
         else:
             self.last_click_time = int(time.time() * 1000.0)
+        print "Last click was found at", self.last_click_time
 
     #If no clicks are found in the last 20 seconds, record the clicks as a last pour.
     #Reset click count for next pour.
