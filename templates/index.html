@@ -1,88 +1,205 @@
-  {% extends "layout.html" %}
-  {% block content %}
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>KegPi</title> 
+    <link rel="stylesheet" href="../static/kegpicss.css">
+    <link rel="stylesheet" href="../static/normalize.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  </head>
+  <body>
+
+      <header>
+        <section class="header container">
+          <h1>KegPi</h1>
+          </section>
+      </header> 
+  <!--{% block content %}-->
     <div class="taps container">
 
-      <div class="tap1">
+      <section class="tap1">
           <h3 class="ea_tap">Left Tap</h3>
           <div class="beer_name">
-            <h3>{{ beer_name1 }}</h3>
+            <h2>{{ beer_name1 }}</h2>
+            
           </div>
-          <div class="levels">
-             
-              {{ desc1 }}
-                <div class="keg_health1">
-                    <h4>Keg Health</h4>
-                    <div class="keg_img"></div>
-                    <div class="remaining"> {{ pints1_left }} Pints remaining</div>
-                    <div class="pct">{{pct1}} %</div>
-                </div><br>
-                <div class="stats1">
-                  <ul>
-                    <li>OG: {{og1}} / FG: {{fg1}}</li>
-                    <li>ABV: {{abv1}}%</li>
-                    <li>IBU: {{ibu1}}</li>
-                    <li>Drinks: {{ last1 }}</li>
-                  </ul>
-                </div>
-              
-                
-          </div><!-- /.levels -->
-          <div class="last_pour1">
-            <ul class="pour1">
-              <h3>Last Pour</h3>
-              <li>{{ last_oz1 }} oz / {{ last_ml1 }} ml</li>
-              <li>Calories : {{ calories1 }}</li>
-              <li>Time : {{ time1 }} @ {{ pourtime1 }}</li>
-            </ul>
-             <h4>Previous Pours</h4>
-            <ul class="prev_pours">
-              <li>{{ second1 }}</li>
-              <li>{{ third1 }}</li>
-              <li>{{ fourth1 }}</li>
-              <li>{{ fifth1 }}</li>
-            </ul>
-          </div>
-      </div><!-- /.tap1 -->
-
-      
-      <div class="tap2">
-           <h3 class="ea_tap">Right Tap</h3>
-          <div class="beer_name">
-            <h3>{{ beer_name2 }}</h3>
-          </div>  
-          <div class="levels">
-            {{ desc2 }}
-            <div class="keg_health2">
-                  <h4>Keg Health</h4>
-                  <div class="keg_img"></div>
-                  <div class="remaining"> {{ pints2_left }} Pints remaining</div>
-                  <div class="pct">{{pct2}} %</div>
-              </div><br>
-            <div class="stats2">
-              <ul>
-                <li>OG: {{og2}} / FG: {{fg2}} </li>
-                <li>ABV: {{abv2}}%</li>
-                <li>IBU: {{ibu2}}</li>
-                <li>Drinks: {{ last2 }}</li>
+          <section class="attributes">
+              <ul class="attr_list">
+                <li><span>OG:</span> {{og1}} |  <span>FG:</span> {{fg1}} </li>
+                <li><span>ABV:</span> {{abv1}}%</li>
+                <li><span>IBU:</span> {{ibu1}}</li>
+                <li><span>Drinks:</span> {{ last1 }}</li>
+                <li><span>Glass-size:</span> {{ last1 }}</li>
               </ul>
+            
+            <div class="description">
+              <p>{{ desc1 }}</p>
             </div>
+          </section>
+        <div class="levels-wrap">
+          <section class="levels">
+            <h3>Keg Health</h3>
+            <div class="keg-wrap">
+              <div class="keg_img"> </div>
+               <h5 class="glass-title">Glass Style</h5>
+            </div>
+            <div class="remain health"><p>{{ pints1_left }} Pints remaining</p></div>
+            <div class="pct health"><p>Keg at {{pct1}} %</p></div>
+                   
+          </section><!-- /.levels -->
+        </div>
+          <div class="pours">
+          <h3>Last Pour</h3>
+              <section class="last_pour1">
+                  
+                  <div class="keg-wrap">
+                    <div class="keg_img"></div>
+                     <h5>Glass Style</h5>
+                  </div>
+                  <div class="pour1">
+                    <section class="label-div">
+                       <h5 class="title">Amt </h5><span class="label">{{ last_oz1 }} oz</span>
+                    </section>
+                    <section class="label-div">
+                      <h5 class="title">Amt </h5>
+                        <span class="label">{{ last_ml1 }} ml</span>
+                    </section>
+                    <section class="label-div">
+                      <h5 class="title">Cal </h5>
+                      <span class="label">{{ calories1 }} cal</span>
+                    </section>
+                    <section class="label-div">
+                      <h5 class="title">Time </h5><span class="label">{{ time1 }}</span>
+                    </section>
+                    
+                  </div><!-- /.pour1 -->
+              </section><!-- /.last_pour1 -->
+           </div><!-- /.pours -->
+           <section class="prev_pours">
+              <h3>Previous Pours</h3>
               
-          </div><!-- /.levels -->
-          <div class="last_pour2">
-            <ul class="pour2">
-              <h3>Last Pour</h3>
-              <li>{{ last_oz2 }} oz / {{ last_ml2 }} ml</li>
-              <li>Calories : {{ calories2 }}</li>
-              <li>Time : {{ time2 }} @ {{ pourtime2 }}</li>
-            </ul>
-            <h4>Previous Pours</h4>
-            <ul class="prev_pours">
-              <li>{{ second2 }} </li>
-              <li>{{ third2 }}</li>
-              <li>{{ fourth2 }}</li>
-              <li>{{ fifth2 }}</li>
-            </ul>
-          </div>
-      </div> <!-- /.tap2 -->
-    </div><!-- /.container -->
-  {% endblock %}
+              <div class="glass">
+                <i></i>
+                <p>{{ second1 }}</p>
+              </div>
+              <div class="glass">
+                <i></i>
+                <p>{{ third1 }}</p>
+              </div>
+              <div class="glass">
+                <i></i>
+                <p>{{ fourth1 }}</p>
+              </div>
+              <div class="glass">
+                <i></i>
+                <p>{ fifth1 }}</p>
+              </div>
+            </section>  <!-- /.prev_pours -->  
+            <div class="tap-footer">
+              <a class="ghost-button" href="#" onclick="window.location.reload();">Edit</a>
+              <a class="ghost-button" href="#">Reset</a>
+            </div>
+      </section><!-- /.tap1 -->
+
+       <section class="tap2">
+           <h3 class="ea_tap">Right Tap</h3>
+           <div class="beer_name">
+             <h2>{{ beer_name2 }}</h2>
+             
+           </div>
+           <section class="attributes">
+               <ul class="attr_list">
+                 <li><span>OG:</span> {{og2}} |  <span>FG:</span> {{fg2}} </li>
+                 <li><span>ABV:</span> {{abv2}}%</li>
+                 <li><span>IBU:</span> {{ibu2}}</li>
+                 <li><span>Drinks:</span> {{ last2 }}</li>
+                 <li><span>Glass-size:</span> {{ last2 }}</li>
+               </ul>
+             
+             <div class="description">
+               <p>{{ desc2 }}</p>
+             </div>
+           </section>
+         <div class="levels-wrap">
+           <section class="levels">
+             <h3>Keg Health</h3>
+             <div class="keg-wrap">
+               <div class="keg_img"> </div>
+                <h5 class="glass-title">Glass Style</h5>
+             </div>
+             <div class="remain health"><p>{{ pints2_left }} Pints remaining</p></div>
+             <div class="pct health"><p>Keg at {{pct2}} %</p></div>
+                    
+           </section><!-- /.levels -->
+         </div>
+           <div class="pours">
+           <h3>Last Pour</h3>
+               <section class="last_pour1">
+                   
+                   <div class="keg-wrap">
+                     <div class="keg_img"></div>
+                      <h5>Glass Style</h5>
+                   </div>
+                   <div class="pour1">
+                     <section class="label-div">
+                        <h5 class="title">Amt </h5><span class="label">{{ last_oz2 }} oz</span>
+                     </section>
+                     <section class="label-div">
+                       <h5 class="title">Amt </h5>
+                         <span class="label">{{ last_ml2 }} ml</span>
+                     </section>
+                     <section class="label-div">
+                       <h5 class="title">Cal </h5>
+                       <span class="label">{{ calories2 }} cal</span>
+                     </section>
+                     <section class="label-div">
+                       <h5 class="title">Time </h5><span class="label">{{ time2 }}</span>
+                     </section>
+                     
+                   </div><!-- /.pour2 -->
+               </section><!-- /.last_pour2 -->
+            </div><!-- /.pours -->
+            <section class="prev_pours">
+               <h3>Previous Pours</h3>
+               
+               <div class="glass">
+                 <i></i>
+                 <p>{{ second2 }}</p>
+               </div>
+               <div class="glass">
+                 <i></i>
+                 <p>{{ third2 }}</p>
+               </div>
+               <div class="glass">
+                 <i></i>
+                 <p>{{ fourth2 }}</p>
+               </div>
+               <div class="glass">
+                 <i></i>
+                 <p>{ fifth2 }}</p>
+               </div>
+             </section>  <!-- /.prev_pours -->  
+             <div class="tap-footer">
+               <a class="ghost-button" href="#" onclick="window.location.reload();">Edit</a>
+               <a class="ghost-button" href="#">Reset</a>
+             </div>
+       </section><!-- /.tap2 -->
+      
+
+  <!--{% endblock %}-->
+      </div><!-- /.container -->
+
+    <footer>
+    <section class="footer container">
+      
+      <p>Copyright &copy; 2015 Brad Brockman &amp; Nichelle Fair. All rights reserved.<br>Powered by <a href="https://github.com/bradbrok/KegPi">KegPi</a></p>
+       <ul>
+      <li><a href="/admin">Admin</a> |</li>
+      <li><a href="/kegs">Kegs</a></li>
+    </ul>
+    </section>
+      
+    </footer>   
+  </body>
+
+</html>
