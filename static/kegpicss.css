@@ -278,7 +278,7 @@ a:hover {
 	.tap2{margin-top: 2em;}
 	.footer {flex-flow:column nowrap;}
 }
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 750px) {
 
 	.attributes{
 		flex-flow:column nowrap;
