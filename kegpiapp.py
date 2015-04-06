@@ -21,7 +21,6 @@ db.beers_init()
 def check_auth(username, password):
     #lol, need to hash these in the db.
     return username == 'beer' and password == 'beer'
-    
 
 def authenticate():
     return Response(
@@ -52,7 +51,7 @@ def calorie_calc(og, fg, ml):
     abw = ((0.79 * abv) / fg)
     rex = (0.1808 * pog) + (0.8192 * pfg)
     calories = ((6.9 * abw) + 4 * (rex - 0.1)) * fg * (ml /100)
-    if calories > 0: #If there's a beer with negative calories, let me know, I could use it.
+    if calories > 0:
         return round(calories, 1)
     else:
         return 0
@@ -72,7 +71,6 @@ def dashboard():
     last_oz1 = db.last_beer_tap1_oz()
     last_ml1 = db.last_beer_tap1_ml()
     time1 = db.last_beer_tap1_time()
-    pourtime1 = db.last_time1()
     pints1_left = round((db.keg_volume1_pints() / 16), 1)
     second1 = db.second_beer1()
     third1 = db.third_beer1()
@@ -91,7 +89,6 @@ def dashboard():
     last_oz2 = db.last_beer_tap2_oz()
     last_ml2 = db.last_beer_tap2_ml()
     time2 = db.last_beer_tap2_time()
-    pourtime2 = db.last_time2()
     pints2_left = round((db.keg_volume2_pints() / 16),1)
     second2 = db.second_beer2()
     third2 = db.third_beer2()
@@ -111,7 +108,6 @@ def dashboard():
         last_oz1 = last_oz1,
         last_ml1 = last_ml1,
         time1 = time1,
-        pourtime1=pourtime1,
         pints1_left = pints1_left,
         og1 = og1,
         fg1 = fg1,
@@ -130,7 +126,6 @@ def dashboard():
         last_oz2 = last_oz2,
         last_ml2 = last_ml2,
         time2 = time2,
-        pourtime2=pourtime2,
         pints2_left = pints2_left,
         calories2 = calories2,
         second2 = second2,
@@ -229,7 +224,7 @@ def kick1():
 @requires_auth
 def kick2():
     admin = AdminActions()
-    admin.kick_keg2()
+    admin.kick_keg1()
     return redirect('/admin')
 
 class CalibrateForm(Form):
@@ -271,8 +266,7 @@ def calibrate_page2():
 
 @app.route('/kegs',methods=['GET'])
 def kegs():
-    kegs = db.keg_loop()
-    return render_template('/kegs.html', kegs=kegs)
+    return render_template('/kegs.html')
 
 @app.errorhandler(404)
 def not_found(error):
@@ -280,3 +274,6 @@ def not_found(error):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
+    #tap1.run()
+    #tap2.run() #These will soon run the background tasks for the individual taps.
+
