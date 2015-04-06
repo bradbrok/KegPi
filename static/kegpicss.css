@@ -55,11 +55,19 @@ h3 {
 	margin: .5em ;
 	width: 100%;
 }
-.keg_img {
+.keg_img, .pint_img, .weizen_img, .tulip_img, .snifter_img, .pilsner {
 	padding: 2em 0;
 	text-align: center;
-	background: #e8e8e8 url('../static/keg.svg') no-repeat center;
 }
+.keg_img {
+	background: #e8e8e8 url('../images/mug.svg') no-repeat center;
+}
+.pint_img {background: #e8e8e8 url('../images/pint.svg') no-repeat center;}
+.weizen_img {background: #e8e8e8 url('../images/weizen.svg') no-repeat center;}
+.tulip_img {background: #e8e8e8 url('../images/tulip.svg') no-repeat center;}
+.snifter_img {background: #e8e8e8 url('../images/snifter.svg') no-repeat center;}
+.pilsner_img {background: #e8e8e8 url('../images/pilsner.svg') no-repeat center;}
+
 .attributes {
 	flex-flow: row wrap;
 }
@@ -339,3 +347,4 @@ a:hover {
 	.attr_list, .description {margin: .5em auto;}
 	
 }
+ 
