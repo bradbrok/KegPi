@@ -16,7 +16,7 @@ h1, h2, h3, h4, h5 {
 h3, h4, h5 { text-transform: uppercase;}
 
 ul {list-style-type: none;}
-/*div{overflow: hidden;}*/
+
 
 section {
 	display: flex;
@@ -311,3 +311,11 @@ a:hover {
 	}
 }
 
+/*
+320 = 20 em
+480 = 30 em
+768 = 48 em
+960 = 60 em
+1024 = 64em
+
+*/
