@@ -203,7 +203,6 @@ a:hover {
 	text-align: center;
 	padding: .657em 1em;
 	flex:4 3;
-<<<<<<< HEAD
 }
 
 .tap1 .title {
@@ -220,7 +219,6 @@ a:hover {
   color: #885B24;
 }
 
-=======
 }
 
 .tap1 .title {
@@ -237,7 +235,6 @@ a:hover {
   color: #885B24;
 }
 
->>>>>>> e648ccd2859a61143a5239377b6f68c6a1038f09
 /* =======================Right Tap=====================*/
 
 .tap2{
@@ -293,11 +290,6 @@ a:hover {
 	.tap1, .tap2 {
 		width:100%;
 		margin-left:0;
-<<<<<<< HEAD
-	}
-	.tap2{margin-top: 2em;}
-	.footer {flex-flow:column nowrap;}
-=======
 	}
 	.tap2{margin-top: 2em;}
 	.footer {flex-flow:column nowrap;}
@@ -333,7 +325,6 @@ a:hover {
 		width: 50%;
 		margin:auto;
 	}
->>>>>>> e648ccd2859a61143a5239377b6f68c6a1038f09
 }
 @media screen and (max-width: 750px) {
 
