@@ -219,6 +219,22 @@ a:hover {
   color: #885B24;
 }
 
+}
+
+.tap1 .title {
+	color: #c4c4c4;
+	background: #885B24;
+	padding:1em;
+	flex: 1 1;
+	text-align: center;
+}
+
+.tap1 .ghost-button:hover,
+.tap1 .ghost-button:active {
+  background-color: #dbdbdb;
+  color: #885B24;
+}
+
 /* =======================Right Tap=====================*/
 
 .tap2{
@@ -310,12 +326,16 @@ a:hover {
 		margin:auto;
 	}
 }
+@media screen and (max-width: 750px) {
 
-/*
-320 = 20 em
-480 = 30 em
-768 = 48 em
-960 = 60 em
-1024 = 64em
-
-*/
+	.attributes{
+		flex-flow:column nowrap;
+	}
+	.attr_list {
+		border-right:none;
+		border-bottom:2px dotted #3f4040;
+		padding-bottom: 1.25em;
+	}
+	.attr_list, .description {margin: .5em auto;}
+	
+}

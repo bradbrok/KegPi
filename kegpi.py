@@ -17,13 +17,8 @@ f = FlowMeter()
 bevdb = BevDataBase()
 
 #This will soon update when I get around to using this app.
-beers_drank_while_coding_this = "12"
+beers_drank_while_coding_this = "14"
 
-#The ini settings to load calibration constants from.
-config = ConfigParser.ConfigParser()
-config.read("tap_config.ini")
-
-#Let's move this to a db.db_create_all function of some sort, right now nothing is initialized if there is no db.
 #Database config.
 db = sqlite3.connect('beverage_db', check_same_thread=False)
 cursor = db.cursor()
@@ -73,7 +68,7 @@ GPIO.add_event_detect(flow_pin_tap2, GPIO.RISING, callback=to_pi_tap2)
 #Called when the pour event happens.
 def update_db():
     tap_value = taps.tap_no
-    time_pour = time.strftime('%h:%M %p')
+    time_pour = time.strftime('%I:%M %p')
     date_pour = time.strftime('%m/%d/%y')
     clicks = f.last_clicks
     ml_pour = f.to_ml

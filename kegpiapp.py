@@ -21,6 +21,7 @@ db.beers_init()
 def check_auth(username, password):
     #lol, need to hash these in the db.
     return username == 'beer' and password == 'beer'
+    
 
 def authenticate():
     return Response(
@@ -228,7 +229,7 @@ def kick1():
 @requires_auth
 def kick2():
     admin = AdminActions()
-    admin.kick_keg1()
+    admin.kick_keg2()
     return redirect('/admin')
 
 class CalibrateForm(Form):
@@ -271,11 +272,11 @@ def calibrate_page2():
 @app.route('/kegs',methods=['GET'])
 def kegs():
     kegs = db.keg_loop()
-    return render_template('/kegs.html')
+    return render_template('/kegs.html', kegs=kegs)
 
 @app.errorhandler(404)
 def not_found(error):
     return render_template('404.html'), 404
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='0.0.0.0', port=80)

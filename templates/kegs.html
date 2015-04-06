@@ -1,8 +1,15 @@
 {% extends "layout.html" %}
 
 {% block content %}
-This will soon have all of the previous kegs that were on tap. A for loop will cycle through the last kegs that were on tap, and the date that they were kicked.
-
-{{kegs}}
-
+<div class="tap2">
+	{% if kegs != 0: %}
+	<ul>
+		{% for x in kegs %}
+			<li>
+			{{x}}
+			</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+</div>
 {% endblock %}

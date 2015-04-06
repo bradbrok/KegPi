@@ -59,29 +59,26 @@ class FlowMeter(object):
     def update(self):
         self.click_control = max(((time.time()* 1000.0) - self.last_click_time), 1)
         self.hertz = (1000 / self.click_control)
-        if (self.hertz > 3 and self.hertz < 100):
+        if (self.hertz > 5 and self.hertz < 100):
             self.click_count = self.click_count + 1
-        self.last_click_time = int(time.time() * 1000.0)
-        print self.click_count, "Last Click at", self.last_click_time
+        else:
+            self.last_click_time = int(time.time() * 1000.0)
+        print "Last click was found at", self.last_click_time
 
     #If no clicks are found in the last 20 seconds, record the clicks as a last pour.
     #Reset click count for next pour.
     def last_pour_func(self):
         if (self.click_count == 0):
             pass
-        elif (time.time() - self.last_click_time > 5):
+        elif (time.time() - (self.last_click_time / 1000) > 15):
             self.last_pour = self.click_count
             self.last_clicks = self.click_count
             self.click_count = 0
-            print "Click count reset to: ", self.click_count
             self.last_pour_time = time.ctime()
             if (self.calibration == 0):
-                self.calibrate()
-            else:
-                print "Sweet, I see we're already calibrated."
+                self.calibration = 1
             #Call this to update our volumes and totals in one go.
             self.update_all()
-            print "Last pour was", self.last_pour, "clicks, at", self.last_pour_time
             return self.last_pour
         else:
             print "Waiting for pour to finish."
@@ -90,7 +87,7 @@ class FlowMeter(object):
     def update_all(self):
         self.last_pour_in_ml()
         self.last_pour_in_oz()
-        self.store_total_clicks()
+        #self.store_total_clicks() don't really need this.
         self.last_click_time = time.time()
         self.pour_event_occured = True #Use this to update our database lazily.
         self.count_drinks()
@@ -108,18 +105,12 @@ class FlowMeter(object):
 
     #Store the last pour in ml
     def last_pour_in_ml(self):
-        if self.calibration == 0:
-            print "Please calibrate by calling calibrate() method first."
-        else:
-            self.to_ml = (self.last_pour * self.calibration)
-            print self.to_ml, "ml poured at", self.calibration, "ml per click."
-            return self.to_ml
+        self.to_ml = (self.last_pour * self.calibration)
+        print self.to_ml, "ml poured at", self.calibration, "ml per click."
+        return self.to_ml
 
     #Store the last pour in OZ
     def last_pour_in_oz(self):
-        if self.calibration == 0:
-            print "Please calibrate by calling calibrate() method first."
-        else:
-            self.last_pour_oz = ((self.last_pour * self.calibration) / self.ml_in_an_oz)
-            print self.last_pour_oz, "oz poured."
-            return self.last_pour_oz
+        self.last_pour_oz = ((self.last_pour * self.calibration) / self.ml_in_an_oz)
+        print self.last_pour_oz, "oz poured."
+        return self.last_pour_oz

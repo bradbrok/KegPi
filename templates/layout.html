@@ -1,31 +1,35 @@
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="{{ url_for('static', filename='kegpicss.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='normalize.css') }}">
+
   <head>
     <title>KegPi</title> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='kegpicss.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='normalize.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   </head>
   <body>
-   
-    <header>
-      <div class="container">
-        <h1 class="logo"><a href="/">KegPi</a></h1>
-      </div>
-    </header> 
-     
-    <div class="container">
+
+      <header>
+        <section class="header container">
+          <h1>KegPi</h1>
+          </section>
+      </header> 
     {% block content %}
 
 
     {% endblock %}
-    </div>
-    <div class="footer">
-      <a href="/admin">Admin</a>
-      <a href="/kegs">Kegs</a>
-      <br>
-      Powered by <a href="https://github.com/bradbrok/KegPi">KegPi</a>
-    </div>   
+    <footer>
+    <section class="footer container">
+      
+      <p>Copyright &copy; 2015 Brad Brockman &amp; Nichelle Fair. All rights reserved.<br>Powered by <a href="https://github.com/bradbrok/KegPi">KegPi</a></p>
+       <ul>
+      <li><a href="/">Home</a> |</li>
+      <li><a href="/admin">Admin</a> |</li>
+      <li><a href="/kegs">Kegs</a></li>
+    </ul>
+    </section>
+      
+    </footer>   
   </body>
 
 </html>

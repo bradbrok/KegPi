@@ -22,6 +22,8 @@ class BevDataBase(object):
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS beers2(id INTEGER PRIMARY KEY, beer_name TEXT, 
             og Numeric, fg Numeric, calibration Numeric, beer_desc TEXT, ibu Numeric, glass_type TEXT, 
             keg_size Numeric, keg_start_volume Numeric)''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS kegs(id INTEGER PRIMARY KEY, beer_name TEXT, date_kicked TEXT)''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS user(username TEXT, password TEXT)''')
         self.db.commit()
         self.cursor.execute('''SELECT beer_name from beers1 where id=1''')
         idx = self.cursor.fetchone()
@@ -29,11 +31,11 @@ class BevDataBase(object):
             self.cursor.execute('''INSERT INTO beers1(beer_name, og, fg, calibration, beer_desc, ibu, glass_type, 
                 keg_size, keg_start_volume) 
                 VALUES (?,?,?,?,?,?,?,?,?)''', 
-                ("Beer", 1, 1, 2.25, "Delicious!", 0, "Pint Glass", 640, 0))
+                ("Beer", 1, 1, 0.9, "Delicious!", 0, "Pint Glass", 640, 0))
             self.cursor.execute('''INSERT INTO beers2(beer_name, og, fg, calibration, beer_desc, ibu, glass_type, 
                 keg_size, keg_start_volume)
                 VALUES (?,?,?,?,?,?,?,?,?)''', 
-                ("Beer", 1, 1, 2.25, "Delicious!", 0, "Pint Glass", 640, 0))
+                ("Beer", 1, 1, 0.9, "Delicious!", 0, "Pint Glass", 640, 0))
             self.db.commit()
         else:
             pass
@@ -47,14 +49,15 @@ class BevDataBase(object):
         self.cursor.execute('''SELECT max(id) from kegs''')
         last_id = self.cursor.fetchone()[0]
         if last_id != None:
-            for last_id in (1,last_id):
-                self.cursor.execute('''SELECT beer_name from kegs where id=?''', [last_id])
+            for keg in xrange(0,last_id):
+                keg += 1
+                self.cursor.execute('''SELECT beer_name from kegs where id=?''', [keg])
                 name = self.cursor.fetchone()[0]
-                self.cursor.execute('''SELECT date_kicked from kegs where id=?''', [last_id])
+                self.cursor.execute('''SELECT date_kicked from kegs where id=?''', [keg])
                 kicked = self.cursor.fetchone()[0]
-                keg_list.append((name,kicked))
-                print keg_list
-                return keg_list
+                kicked_kegs = "%s kicked on %s" % (name, kicked)
+                keg_list.append(kicked_kegs)
+            return keg_list[::-1] #Puts the string in a list, then reverse the list!
         else:
             return 0
 
